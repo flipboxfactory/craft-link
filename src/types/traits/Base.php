@@ -120,7 +120,7 @@ trait Base
     public function getSettings(): array
     {
         $settings = [
-            'requireText' => 'requireText'
+            'requireText' => $this->requireText
         ];
 
         foreach ($this->settings() as $attribute) {
