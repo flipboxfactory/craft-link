@@ -1,0 +1,15 @@
+{% import "_includes/forms" as forms %}
+
+{% if type.overrideText %}
+    {{ forms.textField({
+        label: 'Text'|t('link'),
+        instructions: 'Enter the text for the link'|t('link'),
+        name: 'text',
+        id: 'text',
+        value: type.text,
+        errors: type.getErrors('text'),
+        required: type.settings.requireText
+    }) }}
+{% endif %}
+
+{{ elementSelectInput|raw }}

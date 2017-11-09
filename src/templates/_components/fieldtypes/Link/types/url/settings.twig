@@ -1,0 +1,9 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: 'Require Text'|t('link'),
+    instructions: 'Require the text field to be populated'|t('link'),
+    name: 'requireText',
+    id: 'requireText',
+    on: type.settings.requireText
+}) }}

@@ -1,0 +1,22 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: 'Override Text'|t('link'),
+    instructions: 'Allow the title to be overrwritten.'|t('link'),
+    name: 'overrideText',
+    id: 'overrideText',
+    on: type.settings.overrideText,
+    toggle: "text-required-field"
+}) }}
+
+<div id="text-required-field" class="{% if not type.settings.overrideText %}hidden{% endif %}">
+    {{ forms.lightswitchField({
+        label: 'Require Text'|t('link'),
+        instructions: 'Require the text field to be populated'|t('link'),
+        name: 'requireText',
+        id: 'requireText',
+        on: type.settings.requireText
+    }) }}
+</div>
+
+{{ elementSelectSettings|raw }}

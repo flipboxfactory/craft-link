@@ -1,0 +1,41 @@
+{
+  "name": "flipboxfactory/craft-link",
+  "description": "Link Field Type",
+  "version": "1.0.0-beta",
+  "type": "craft-plugin",
+  "minimum-stability": "beta",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true
+  },
+  "require": {
+    "craftcms/cms": "~3.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.0",
+    "squizlabs/php_codesniffer": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "flipbox\\link\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "flipbox\\link\\tests\\": "tests/src/"
+    }
+  },
+  "extra": {
+    "name": "Link",
+    "handle": "link",
+    "developer": "Flipbox Digital",
+    "developerUrl": "https://www.flipboxdigital.com",
+    "class": "flipbox\\link\\Link",
+    "hasCpSettings": false,
+    "hasCpSection": false,
+    "schemaVersion": "1.1.0",
+    "components": {
+      "type": "flipbox\\link\\services\\Type"
+    }
+  }
+}

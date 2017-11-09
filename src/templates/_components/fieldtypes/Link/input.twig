@@ -1,0 +1,55 @@
+{% import "_includes/forms" as forms %}
+{% from _self import renderTypes %}
+{% set identifierField = 'identifier' %}
+
+{% set options = [{
+label: 'Link type'|t('link')
+}] %}
+{% for key, type in field.types %}
+    {% set options = options|merge([{
+    label: type.displayName(),
+    value: key
+    }]) %}
+{% endfor %}
+
+{% set activeIdentifier = value ? value.identifier : '' %}
+{% namespace field.handle %}
+
+<div class="field-type-flipbox-link" id="field-type-flipbox-link">
+    {{ forms.selectField({
+        name: identifierField,
+        id: identifierField,
+        options: options,
+        value: value ? value.identifier : null
+    }) }}
+    {{ renderTypes(activeIdentifier, field.types, field, value, element) }}
+</div>
+
+{% js %}
+Craft.updateTypeSettings = function(type, $container) {
+var type = type.replace(/\\/g, '-');
+
+$container.find(".settings").addClass('hidden');
+$container.find("#"+type).removeClass('hidden');
+}
+
+$("#{{ 'field-type-flipbox-link'|namespaceInputId|e('js') }}").find("#{{ identifierField|namespaceInputId|e('js') }}").change(function(e) {
+Craft.updateTypeSettings(
+'{{ ''|namespaceInputId }}'+$(this).val(),
+$("#{{ 'field-type-flipbox-link'|namespaceInputId|e('js') }}")
+);
+});
+{% endjs %}
+{% endnamespace %}
+
+{% macro renderTypes(activeIdentifier, types, field, value, element) %}
+    {% for key, type in field.types %}
+        {% set isCurrent = activeIdentifier == type.identifier %}
+        {% set type = isCurrent and value ? value : type %}
+        <div id="{{ key|id }}" class="settings{% if not isCurrent %} hidden{% endif %}">
+            {% namespace 'types['~key~']' %}
+            {{ type.inputHtml(field, value, element)|raw }}
+            {% endnamespace %}
+        </div>
+    {% endfor %}
+{% endmacro %}
