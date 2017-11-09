@@ -30,6 +30,11 @@ class Url extends AbstractType
     protected $identifier = 'url';
 
     /**
+     * @var bool
+     */
+    public $showText = true;
+
+    /**
      * @inheritdoc
      */
     public static function displayName(): string
@@ -56,6 +61,16 @@ class Url extends AbstractType
                 'type' => $this
             ]
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function settings(): array
+    {
+        return [
+            'showText'
+        ];
     }
 
     /**

@@ -228,7 +228,12 @@ class Link extends Field
 
         LinkPlugin::getInstance()->getType()->populate(
             $type,
-            $value
+            array_filter(
+                $value,
+                function($var){
+                    return !is_null($var);
+                }
+            )
         );
 
         return $type;
