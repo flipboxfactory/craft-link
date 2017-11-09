@@ -33,7 +33,7 @@
     "class": "flipbox\\link\\Link",
     "hasCpSettings": false,
     "hasCpSection": false,
-    "schemaVersion": "1.1.0",
+    "schemaVersion": "1.0.0",
     "components": {
       "type": "flipbox\\link\\services\\Type"
     }
