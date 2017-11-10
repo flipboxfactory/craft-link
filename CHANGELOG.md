@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
-## Unreleased
+## 1.0.0-beta.2 - 2017-11-10
 ### Added
 - Placeholder for external url inputs
 - Ability to open link in new windows

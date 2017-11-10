@@ -1,7 +1,7 @@
 {
   "name": "flipboxfactory/craft-link",
   "description": "Link Field Type for Craft CMS",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "type": "craft-plugin",
   "minimum-stability": "beta",
   "prefer-stable": true,
