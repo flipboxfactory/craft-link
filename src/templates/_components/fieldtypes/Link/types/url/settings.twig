@@ -1,5 +1,13 @@
 {% import "_includes/forms" as forms %}
 
+{{ forms.textField({
+    label: 'Placeholder Text'|t('link'),
+    instructions: 'The text that will be shown if the field doesn’t have a value.',
+    name: 'placeholder',
+    id: 'placeholder',
+    value: type.settings.placeholder
+}) }}
+
 {{ forms.lightswitchField({
     label: 'Show Text'|t('link'),
     name: 'showText',
@@ -17,3 +25,10 @@
         on: type.settings.requireText
     }) }}
 </div>
+
+{{ forms.lightswitchField({
+    label: 'Show option to open in new window'|t('link'),
+    name: 'showTarget',
+    id: 'showTarget',
+    on: type.settings.showTarget
+}) }}

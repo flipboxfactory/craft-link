@@ -35,6 +35,21 @@ class Url extends AbstractType
     public $showText = true;
 
     /**
+     * @var bool
+     */
+    public $showTarget = false;
+
+    /**
+     * @var string
+     */
+    public $target = "_self";
+
+    /**
+     * @var string|null The input’s placeholder text
+     */
+    public $placeholder;
+
+    /**
      * @inheritdoc
      */
     public static function displayName(): string
@@ -69,7 +84,9 @@ class Url extends AbstractType
     public function settings(): array
     {
         return [
-            'showText'
+            'showText',
+            'placeholder',
+            'showTarget'
         ];
     }
 
@@ -128,5 +145,18 @@ class Url extends AbstractType
                 'field' => $field
             ]
         );
+    }
+
+    /**
+     * @param array $attributes
+     * @return string
+     */
+    public function getHtml(array $attributes = []): string
+    {
+        if($this->showTarget && $this->target) {
+            $attributes['target'] = "_blank";
+        }
+
+        return parent::getHtml($attributes);
     }
 }

@@ -3,7 +3,7 @@
 {% if type.settings.showText %}
     {{ forms.textField({
         label: 'Text'|t('link'),
-        instructions: 'Enter the text for the link'|t('link'),
+        instructions: 'Enter the text for the url'|t('link'),
         name: 'text',
         id: 'text',
         value: type.text,
@@ -14,10 +14,21 @@
 
     {{ forms.textField({
         label: 'Url'|t('link'),
-        instructions: 'Enter the url'|t('link'),
+        instructions: 'Enter an absolute url (beginning with https:// or http://)'|t('link'),
         name: 'url',
         id: 'url',
         value: type.url,
+        placeholder: type.settings.placeholder|t('site'),
         errors: type.getErrors('url'),
         required: true
     }) }}
+
+{% if type.settings.showTarget %}
+    {{ forms.lightswitchField({
+        label: 'Open link in new window'|t('link'),
+        name: 'target',
+        id: 'target',
+        on: type.target == '_blank',
+        value: '_blank'
+    }) }}
+{% endif %}

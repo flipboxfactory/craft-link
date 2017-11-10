@@ -12,4 +12,14 @@
     }) }}
 {% endif %}
 
+{% if type.settings.showTarget %}
+    {{ forms.lightswitchField({
+        label: 'Open link in new window'|t('link'),
+        name: 'target',
+        id: 'target',
+        on: type.target == '_blank',
+        value: '_blank'
+    }) }}
+{% endif %}
+
 {{ elementSelectInput|raw }}

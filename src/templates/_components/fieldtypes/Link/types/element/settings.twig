@@ -19,4 +19,11 @@
     }) }}
 </div>
 
+{{ forms.lightswitchField({
+    label: 'Show option to open in new window'|t('link'),
+    name: 'showTarget',
+    id: 'showTarget',
+    on: type.settings.showTarget
+}) }}
+
 {{ elementSelectSettings|raw }}
