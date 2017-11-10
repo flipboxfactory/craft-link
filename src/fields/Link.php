@@ -230,7 +230,7 @@ class Link extends Field
             $type,
             array_filter(
                 $value,
-                function($var){
+                function ($var) {
                     return !is_null($var);
                 }
             )

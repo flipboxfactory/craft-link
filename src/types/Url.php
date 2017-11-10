@@ -153,7 +153,7 @@ class Url extends AbstractType
      */
     public function getHtml(array $attributes = []): string
     {
-        if($this->showTarget && $this->target) {
+        if ($this->showTarget && $this->target) {
             $attributes['target'] = "_blank";
         }
 
