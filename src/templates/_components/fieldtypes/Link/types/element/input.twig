@@ -1,25 +1,6 @@
+{% extends "link/_components/fieldtypes/Link/types/input" %}
 {% import "_includes/forms" as forms %}
 
-{% if type.overrideText %}
-    {{ forms.textField({
-        label: 'Text'|t('link'),
-        instructions: 'Enter the text for the link'|t('link'),
-        name: 'text',
-        id: 'text',
-        value: type.text,
-        errors: type.getErrors('text'),
-        required: type.settings.requireText
-    }) }}
-{% endif %}
-
-{% if type.settings.showTarget %}
-    {{ forms.lightswitchField({
-        label: 'Open link in new window'|t('link'),
-        name: 'target',
-        id: 'target',
-        on: type.target == '_blank',
-        value: '_blank'
-    }) }}
-{% endif %}
-
-{{ elementSelectInput|raw }}
+{% block url %}
+    {% include '_includes/forms/elementSelect' with input only %}
+{% endblock %}

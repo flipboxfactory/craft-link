@@ -6,95 +6,32 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\types;
+namespace flipbox\craft\link\types;
 
-use Craft;
-use craft\base\ElementInterface;
 use craft\elements\Entry as EntryElement;
-use craft\fields\Entries;
-use craft\helpers\ArrayHelper;
+use flipbox\craft\link\Link;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  *
- * @method EntryElement findElement()
+ * @method EntryElement getElement()
  */
-class Entry extends Entries implements TypeInterface
+class Entry extends AbstractElement
 {
-
-    use traits\Element;
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        $this->identifier = 'entry';
-        $this->applyDefaultProperties();
-    }
-
     /**
      * @inheritdoc
      */
     public static function displayName(): string
     {
-        return Craft::t('link', 'Entry');
+        return Link::t('Entry');
     }
 
     /**
      * @inheritdoc
      */
-    public function getElementText(): string
+    protected static function elementType(): string
     {
-        if (!$element = $this->findElement()) {
-            return '';
-        }
-        return $element->title;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUrl(): string
-    {
-        if (!$element = $this->findElement()) {
-            return '';
-        }
-        return (string)$element->getUrl();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function lookupElementById(int $id)
-    {
-        return Craft::$app->getEntries()->getEntryById($id);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function settings(): array
-    {
-        // Get setting attributes from component
-        $settings = $this->settingsAttributes();
-
-        // Remove the public 'text' attribute (it's not a setting)
-        ArrayHelper::removeValue($settings, 'text');
-
-        return $settings;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function inputTemplateVariables($value = null, ElementInterface $element = null): array
-    {
-        return parent::inputTemplateVariables(
-            $this->findElement() ? [$this->findElement()] : null,
-            $element
-        );
+        return EntryElement::class;
     }
 }

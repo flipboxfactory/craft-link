@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\types\traits;
+namespace flipbox\craft\link\types;
 
 use craft\helpers\ArrayHelper;
 use craft\helpers\StringHelper;
@@ -15,17 +15,32 @@ use craft\helpers\StringHelper;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-trait Base
+trait BaseTrait
 {
+    /**
+     * @var bool
+     */
+    public $allowText = true;
+
     /**
      * @var bool
      */
     public $requireText = false;
 
     /**
+     * @var bool
+     */
+    public $showTarget = false;
+
+    /**
+     * @var string
+     */
+    public $target = "_self";
+
+    /**
      * @var string|null
      */
-    protected $text;
+    public $overrideText;
 
     /**
      * @var string
@@ -38,29 +53,15 @@ trait Base
     abstract public function getUrl(): string;
 
     /**
-     * Returns the list of attribute names.
-     * By default, this method returns all public non-static properties of the class.
-     * You may override this method to change the default behavior.
-     * @return array list of attribute names.
-     */
-    abstract protected function attributes();
-
-    /**
      * @return string|null
      */
     public function getText()
     {
-        return $this->text;
-    }
+        if ($this->allowText && $this->overrideText !== null) {
+            return $this->overrideText;
+        }
 
-    /**
-     * @param string $text
-     * @return static
-     */
-    public function setText(string $text)
-    {
-        $this->text = $text;
-        return $this;
+        return $this->getUrl();
     }
 
     /**
@@ -69,7 +70,7 @@ trait Base
     public function getIdentifier(): string
     {
         if ($this->identifier === null) {
-            $this->identifier = StringHelper::randomString();
+            $this->identifier = StringHelper::randomString(8);
         }
         return $this->identifier;
     }
@@ -109,9 +110,25 @@ trait Base
     /**
      * @inheritdoc
      */
+    public function attributes()
+    {
+        return [
+            'identifier',
+            'overrideText',
+            'target'
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function settings(): array
     {
-        return [];
+        return [
+            'showTarget',
+            'allowText',
+            'requireText'
+        ];
     }
 
     /**
@@ -119,9 +136,7 @@ trait Base
      */
     public function getSettings(): array
     {
-        $settings = [
-            'requireText' => $this->requireText
-        ];
+        $settings = [];
 
         foreach ($this->settings() as $attribute) {
             $settings[$attribute] = $this->$attribute;
@@ -140,6 +155,10 @@ trait Base
             'href' => $this->getUrl(),
             'title' => $this->getText(),
         ];
+
+        if ($this->showTarget && $this->target) {
+            $defaults['target'] = $this->target;
+        }
 
         $text = ArrayHelper::remove($attributes, 'text', $this->getText());
 

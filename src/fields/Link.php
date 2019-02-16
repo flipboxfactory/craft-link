@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\fields;
+namespace flipbox\craft\link\fields;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -14,10 +14,10 @@ use craft\base\Field;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Db;
 use craft\helpers\Json;
-use flipbox\link\Link as LinkPlugin;
-use flipbox\link\types\TypeInterface;
-use flipbox\link\validators\LinkValidator;
-use flipbox\link\web\assets\settings\Settings;
+use flipbox\craft\link\Link as LinkPlugin;
+use flipbox\craft\link\types\TypeInterface;
+use flipbox\craft\link\validators\LinkValidator;
+use flipbox\craft\link\web\assets\settings\Settings;
 use yii\db\Schema;
 
 /**
@@ -43,6 +43,7 @@ class Link extends Field
 
     /**
      * @return TypeInterface[]
+     * @throws \yii\base\InvalidConfigException
      */
     public function getTypes()
     {
@@ -67,7 +68,8 @@ class Link extends Field
 
     /**
      * @param string $identifier
-     * @return TypeInterface
+     * @return TypeInterface|null
+     * @throws \yii\base\InvalidConfigException
      */
     public function getType(string $identifier)
     {
@@ -102,6 +104,9 @@ class Link extends Field
 
     /**
      * @inheritdoc
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSettingsHtml()
     {
@@ -114,7 +119,7 @@ class Link extends Field
             'link/_components/fieldtypes/Link/settings',
             [
                 'field' => $this,
-                'types' => LinkPlugin::getInstance()->getType()->findAll(),
+                'types' => LinkPlugin::getInstance()->findAllTypes(),
                 'namespace' => $view->getNamespace()
             ]
         );
@@ -122,6 +127,8 @@ class Link extends Field
 
     /**
      * @inheritdoc
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
@@ -158,6 +165,7 @@ class Link extends Field
 
     /**
      * @inheritdoc
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSettings(): array
     {
@@ -187,18 +195,19 @@ class Link extends Field
     }
 
     /**
-     * @param mixed $value
+     * @param $value
      * @param ElementInterface|null $element
-     * @return array|mixed|null|object
+     * @return array|TypeInterface|mixed|object|null
+     * @throws \yii\base\InvalidConfigException
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if (is_string($value) && !empty($value)) {
-            $value = Json::decodeIfJson($value);
-        }
-
         if ($value instanceof TypeInterface) {
             return $value;
+        }
+
+        if (is_string($value) && !empty($value)) {
+            $value = Json::decodeIfJson($value);
         }
 
         if (!is_array($value)) {
@@ -210,7 +219,7 @@ class Link extends Field
             $type = $this->getType($identifier);
         } else {
             if ($class = ArrayHelper::remove($value, 'class')) {
-                $type = LinkPlugin::getInstance()->getType()->create($class);
+                $type = new $class;
             }
         }
 
@@ -226,15 +235,8 @@ class Link extends Field
             );
         }
 
-        LinkPlugin::getInstance()->getType()->populate(
-            $type,
-            array_filter(
-                $value,
-                function ($var) {
-                    return !is_null($var);
-                }
-            )
-        );
+        // Populate
+        $type->populate($value);
 
         return $type;
     }
@@ -242,7 +244,7 @@ class Link extends Field
     /**
      * Create objects from all (remaining) configurations
      *
-     * @return void
+     * @throws \yii\base\InvalidConfigException
      */
     private function resolveConfigs()
     {
@@ -255,12 +257,14 @@ class Link extends Field
     /**
      * @param string $identifier
      * @param array $config
-     * @return null|object
+     * @return TypeInterface|null
+     * @throws \yii\base\InvalidConfigException
      */
     private function resolveConfig(string $identifier, array $config)
     {
-        // cCreate new
-        if (!$type = LinkPlugin::getInstance()->getType()->create($config)) {
+        // Create new
+        /** @var TypeInterface $type */
+        if (!$type = $this->createType($config)) {
             return null;
         }
 
@@ -273,8 +277,35 @@ class Link extends Field
     }
 
     /**
+     * @param $type
+     * @return array|object|null
+     * @throws \yii\base\InvalidConfigException
+     */
+    private function createType($type)
+    {
+        if ($type instanceof TypeInterface) {
+            return $type;
+        }
+
+        if (!is_array($type)) {
+            $type = ['class' => $type];
+        }
+
+        $type = Craft::createObject(
+            $type
+        );
+
+        if (!$type instanceof TypeInterface) {
+            return null;
+        }
+
+        return $type;
+    }
+
+    /**
      * @param string $identifier
-     * @return null|object
+     * @return TypeInterface|null
+     * @throws \yii\base\InvalidConfigException
      */
     private function createFromConfig(string $identifier)
     {

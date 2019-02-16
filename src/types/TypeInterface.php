@@ -6,10 +6,9 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\types;
+namespace flipbox\craft\link\types;
 
-use craft\base\ElementInterface;
-use flipbox\link\fields\Link;
+use flipbox\craft\link\fields\Link;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -17,7 +16,6 @@ use flipbox\link\fields\Link;
  */
 interface TypeInterface
 {
-
     /**
      * @return string
      */
@@ -61,20 +59,24 @@ interface TypeInterface
     public function getProperties(): array;
 
     /**
-     * @return string
-     */
-    public function settingsHtml(): string;
-
-    /**
      * @return bool
      */
     public function validateInput(): bool;
 
     /**
-     * @param Link $field
-     * @param TypeInterface $type
-     * @param ElementInterface|null $element
+     * @param array $properties
+     * @return mixed
+     */
+    public function populate(array $properties);
+
+    /**
      * @return string
      */
-    public function inputHtml(Link $field, TypeInterface $type = null, ElementInterface $element = null): string;
+    public function settingsHtml(): string;
+
+    /**
+     * @param Link $field
+     * @return string
+     */
+    public function inputHtml(Link $field): string;
 }

@@ -6,11 +6,11 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\types;
+namespace flipbox\craft\link\types;
 
 use Craft;
-use craft\base\ElementInterface;
-use flipbox\link\fields\Link;
+use craft\helpers\ArrayHelper;
+use flipbox\craft\link\fields\Link;
 use yii\base\Model;
 
 /**
@@ -19,12 +19,31 @@ use yii\base\Model;
  */
 abstract class AbstractType extends Model implements TypeInterface
 {
-    use traits\Base;
+    use BaseTrait;
 
+    /**
+     * The scenario used to validate input data
+     */
     const SCENARIO_INPUT = 'input';
 
     /**
+     * The base template path to the field type templates
+     */
+    const BASE_TEMPLATE_PATH = 'link/_components/fieldtypes/Link/types';
+
+    /**
+     * The settings template path
+     */
+    const SETTINGS_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/settings';
+
+    /**
+     * The input template path
+     */
+    const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
+
+    /**
      * @inheritdoc
+     * @throws \ReflectionException
      */
     public static function displayName(): string
     {
@@ -34,11 +53,13 @@ abstract class AbstractType extends Model implements TypeInterface
 
     /**
      * @inheritdoc
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function settingsHtml(): string
     {
         return Craft::$app->getView()->renderTemplate(
-            'link/_components/fieldtypes/Link/types/settings',
+            static::SETTINGS_TEMPLATE_PATH,
             [
                 'type' => $this
             ]
@@ -46,35 +67,41 @@ abstract class AbstractType extends Model implements TypeInterface
     }
 
     /**
-     * @inheritdoc
+     * Populate valid properties.  This occurs when we have a content value
+     * and we need to populate it's contents on an existing TypeInterface
+     *
+     * @param array $properties
      */
-    public function inputHtml(Link $field, TypeInterface $value = null, ElementInterface $element = null): string
+    public function populate(array $properties)
     {
-        return '';
+        // If the override text is empty, don't set it
+        if ($overrideText = ArrayHelper::remove(
+            $properties,
+            'overrideText'
+        )) {
+
+            $properties['overrideText'] = $overrideText;
+        }
+
+        foreach ($this->getProperties() as $key => $value) {
+            if (array_key_exists($key, $properties)) {
+                $this->{$key} = $properties[$key];
+            }
+        }
     }
 
     /**
      * @inheritdoc
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
-    public function attributes()
+    public function inputHtml(Link $field): string
     {
-        return array_merge(
-            parent::attributes(),
+        return Craft::$app->getView()->renderTemplate(
+            static::INPUT_TEMPLATE_PATH,
             [
-                'text'
-            ]
-        );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return array_merge(
-            parent::attributeLabels(),
-            [
-                'text' => Craft::t('link', 'Text')
+                'field' => $field,
+                'type' => $this
             ]
         );
     }
@@ -86,7 +113,9 @@ abstract class AbstractType extends Model implements TypeInterface
     {
         $currentScenario = $this->getScenario();
         $this->setScenario(self::SCENARIO_INPUT);
+
         $validates = $this->validate();
+
         $this->setScenario($currentScenario);
         return $validates;
     }
@@ -101,19 +130,22 @@ abstract class AbstractType extends Model implements TypeInterface
             [
                 [
                     [
-                        'text'
+                        'overrideText'
                     ],
                     'required',
                     'when' => function (self $model) {
                         return $model->getSettings()['requireText'] == true;
                     },
+                    'message' => \flipbox\craft\link\Link::t('Link text is required'),
                     'on' => [
                         self::SCENARIO_INPUT
                     ]
                 ],
                 [
                     [
-                        'text'
+                        'identifier',
+                        'overrideText',
+                        'target'
                     ],
                     'safe',
                     'on' => [

@@ -6,9 +6,9 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\events;
+namespace flipbox\craft\link\events;
 
-use flipbox\link\types\TypeInterface;
+use flipbox\craft\link\types\TypeInterface;
 use yii\base\Event;
 
 /**

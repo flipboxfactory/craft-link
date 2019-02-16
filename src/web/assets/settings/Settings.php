@@ -6,7 +6,7 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\web\assets\settings;
+namespace flipbox\craft\link\web\assets\settings;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;

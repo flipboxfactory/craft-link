@@ -1,34 +1,14 @@
+{% extends "link/_components/fieldtypes/Link/types/settings" %}
 {% import "_includes/forms" as forms %}
 
-{{ forms.textField({
-    label: 'Placeholder Text'|t('link'),
-    instructions: 'The text that will be shown if the field doesn’t have a value.',
-    name: 'placeholder',
-    id: 'placeholder',
-    value: type.settings.placeholder
-}) }}
+{% set textInstructions = textInstructions ?? 'Allow content manager enter text other than the url.'|t('link') %}
 
-{{ forms.lightswitchField({
-    label: 'Show Text'|t('link'),
-    name: 'showText',
-    id: 'showText',
-    on: type.settings.showText,
-    toggle: "text-show-field"
-}) }}
-
-<div id="text-show-field" class="{% if not type.settings.showText %}hidden{% endif %}">
-    {{ forms.lightswitchField({
-        label: 'Require Text'|t('link'),
-        instructions: 'Require the text field to be populated'|t('link'),
-        name: 'requireText',
-        id: 'requireText',
-        on: type.settings.requireText
+{% block extras %}
+    {{ forms.textField({
+        label: 'Url Placeholder Text'|t('link'),
+        instructions: 'The text that will be shown if the url doesn’t have a value.',
+        name: 'placeholder',
+        id: 'placeholder',
+        value: type.settings.placeholder
     }) }}
-</div>
-
-{{ forms.lightswitchField({
-    label: 'Show option to open in new window'|t('link'),
-    name: 'showTarget',
-    id: 'showTarget',
-    on: type.settings.showTarget
-}) }}
+{% endblock %}

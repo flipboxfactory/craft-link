@@ -1,34 +1,25 @@
+{% extends "link/_components/fieldtypes/Link/types/input" %}
 {% import "_includes/forms" as forms %}
 
-{% if type.settings.showText %}
-    {{ forms.textField({
-        label: 'Text'|t('link'),
-        instructions: 'Enter the text for the url'|t('link'),
-        name: 'text',
-        id: 'text',
-        value: type.text,
-        errors: type.getErrors('text'),
-        required: type.settings.requireText
-    }) }}
-{% endif %}
+{%- set siteId = ((craft.app.getIsMultiSite() and siteId is defined) ? siteId : null) %}
+{%- set site = (siteId ? craft.app.sites.getSiteById(siteId) : null) %}
+{%- set orientation = (site ? craft.app.i18n.getLocaleById(site.language) : craft.app.locale).getOrientation() %}
+{%- set errors = type.getErrors('url') %}
 
-    {{ forms.textField({
-        label: 'Url'|t('link'),
-        instructions: 'Enter an absolute url (beginning with https:// or http://)'|t('link'),
-        name: 'url',
-        id: 'url',
-        value: type.url,
-        placeholder: type.settings.placeholder|t('site'),
-        errors: type.getErrors('url'),
-        required: true
-    }) }}
-
-{% if type.settings.showTarget %}
-    {{ forms.lightswitchField({
-        label: 'Open link in new window'|t('link'),
-        name: 'target',
-        id: 'target',
-        on: type.target == '_blank',
-        value: '_blank'
-    }) }}
-{% endif %}
+{% block url %}
+    <div>
+        <div class="field" id="url">
+            <div class="input {{ orientation }}{% if errors %} errors{% endif %}">
+                {{ forms.text({
+                   name: 'url',
+                    id: 'url',
+                    value: type.url,
+                    placeholder: type.settings.placeholder|t('site'),
+                    required: true
+                }) }}
+            </div>
+            <small class="light" style="font-size: small">Enter an absolute url (beginning with https:// or http://)</small>
+            {% include "_includes/forms/errorList" with { errors: errors } %}
+        </div>
+    </div>
+{% endblock %}

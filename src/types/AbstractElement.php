@@ -8,16 +8,23 @@
 
 namespace flipbox\craft\link\types;
 
+use Craft;
+use craft\base\ElementInterface;
+use flipbox\craft\link\fields\Link;
+use yii\base\Model;
+
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Url extends AbstractType
+abstract class AbstractElement extends AbstractType implements TypeInterface
 {
+    use ElementTrait;
+
     /**
      * The base template path to the field type templates
      */
-    const BASE_TEMPLATE_PATH = AbstractType::BASE_TEMPLATE_PATH . '/url';
+    const BASE_TEMPLATE_PATH = AbstractType::BASE_TEMPLATE_PATH . '/element';
 
     /**
      * The settings template path
@@ -30,53 +37,41 @@ class Url extends AbstractType
     const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
 
     /**
-     * @var
-     */
-    public $url;
-
-    /**
-     * @var string|null The input’s placeholder text
-     */
-    public $placeholder;
-
-    /**
      * @inheritdoc
      */
-    public static function displayName(): string
+    public function getElementUrl(): string
     {
-        return \flipbox\craft\link\Link::t('Url');
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return $this->url ?: '';
+        if (!$element = $this->getElement()) {
+            return '';
+        }
+        return (string)$element->getUrl();
     }
 
     /**
      * @inheritdoc
      */
-    public function settings(): array
+    public function getElementText(): string
     {
-        return array_merge(
-            parent::settings(),
+        if (!$element = $this->getElement()) {
+            return '';
+        }
+        return (string)$element->title;
+    }
+
+    /**
+     * @inheritdoc
+     * @param ElementInterface|null $element
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
+    public function inputHtml(Link $field, ElementInterface $element = null): string
+    {
+        return Craft::$app->getView()->renderTemplate(
+            static::INPUT_TEMPLATE_PATH,
             [
-                'placeholder'
-            ]
-        );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributes()
-    {
-        return array_merge(
-            parent::attributes(),
-            [
-                'url'
+                'field' => $field,
+                'type' => $this,
+                'input' => $this->inputTemplateVariables($field, $element)
             ]
         );
     }
@@ -91,30 +86,20 @@ class Url extends AbstractType
             [
                 [
                     [
-                        'url'
-                    ],
-                    'url',
-                    'defaultScheme' => '',
-                    'on' => [
-                        self::SCENARIO_INPUT
-                    ]
-                ],
-                [
-                    [
-                        'url'
+                        'elementId'
                     ],
                     'required',
                     'on' => [
-                        self::SCENARIO_INPUT
+                        static::SCENARIO_INPUT
                     ]
                 ],
                 [
                     [
-                        'url'
+                        'elementId'
                     ],
                     'safe',
                     'on' => [
-                        self::SCENARIO_DEFAULT
+                        Model::SCENARIO_DEFAULT
                     ]
                 ]
             ]

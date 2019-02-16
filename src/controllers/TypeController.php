@@ -6,11 +6,11 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\controllers;
+namespace flipbox\craft\link\controllers;
 
 use Craft;
 use craft\web\Controller;
-use flipbox\link\Link;
+use flipbox\craft\link\Link;
 use yii\web\HttpException;
 use yii\web\Response;
 
@@ -20,10 +20,12 @@ use yii\web\Response;
  */
 class TypeController extends Controller
 {
-
     /**
      * @return Response
      * @throws HttpException
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     * @throws \yii\web\BadRequestHttpException
      */
     public function actionSettings(): Response
     {
@@ -32,7 +34,7 @@ class TypeController extends Controller
 
         $view = $this->getView();
 
-        $type = Link::getInstance()->getType()->find(
+        $type = Link::getInstance()->findType(
             Craft::$app->getRequest()->getRequiredBodyParam('type')
         );
 

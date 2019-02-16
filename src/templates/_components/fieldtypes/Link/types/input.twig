@@ -1,0 +1,37 @@
+{% import "_includes/forms" as forms %}
+{% set showText = showText ?? (type.settings.allowText ?? false) %}
+{% set showTarget = showTarget ?? (type.settings.showTarget ?? false) %}
+
+{% set textPlaceholder = textPlaceholder ?? 'Enter the text for the link'|t('link') %}
+
+{% block url %}{% endblock %}
+{% block extras %}
+    <div class="flex" style="margin-top: 12px;">
+        {% if showText %}
+            {% if type.settings.requireText  %}
+                {% set textPlaceholder = textPlaceholder ~ ' (required)'|t('link') %}
+            {% endif %}
+            <div class="flex-grow">
+                {{ forms.textField({
+                    name: 'overrideText',
+                    id: 'overrideText',
+                    value: type.overrideText,
+                    placeholder: textPlaceholder,
+                    errors: type.getErrors('overrideText')
+                }) }}
+            </div>
+        {% endif %}
+
+        {% if showTarget %}
+            <div>
+                {{ forms.checkboxField({
+                    label: 'Open link in new window'|t('link'),
+                    name: 'target',
+                    id: 'target',
+                    on: type.target == '_blank',
+                    value: '_blank'
+                }) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

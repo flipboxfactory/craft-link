@@ -1,1 +1,31 @@
-<p><em>This link type is not configurable.</em></p>
+{% import "_includes/forms" as forms %}
+{% set textInstructions = textInstructions ?? 'Allow content manager to defined custom text.'|t('link') %}
+
+{% block toggles %}
+    {{ forms.lightswitchField({
+        label: 'Override Text'|t('link'),
+        instructions: textInstructions,
+        name: 'allowText',
+        id: 'allowText',
+        on: type.settings.allowText,
+        toggle: "text-required-field"
+    }) }}
+
+    <div id="text-required-field" class="{% if not type.settings.allowText %}hidden{% endif %}">
+        {{ forms.lightswitchField({
+            label: 'Require Text'|t('link'),
+            instructions: 'Require the user defined text field to be populated'|t('link'),
+            name: 'requireText',
+            id: 'requireText',
+            on: type.settings.requireText
+        }) }}
+    </div>
+
+    {{ forms.lightswitchField({
+        label: 'Show option to open in new window'|t('link'),
+        name: 'showTarget',
+        id: 'showTarget',
+        on: type.settings.showTarget
+    }) }}
+{% endblock %}
+{% block extras %}{% endblock %}

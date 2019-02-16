@@ -1,27 +1,94 @@
 @charset "UTF-8";
-@import "../../../../../../../craftcms/cms/src/web/assets/shared";
+@import "../../../../../vendor/craftcms/cms/lib/craftcms-sass/mixins";
 
-/* ----------------------------------------
-/* Link
-/* ----------------------------------------*/
+.links-pane {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: stretch;
 
-/* config */
-.types-pane {
-
-  &,
-  .pane {
-    border: 1px solid #e3e5e8;
-    background: #FFF !important;
-
-  }
-
-  .types {
+  .tabs {
+    position: relative;
+    z-index: 2;
+    min-height: 40px;
+    overflow: hidden;
+    margin: -4px 0 -10px;
+    padding: 5px 0 10px;
+    box-sizing: border-box;
 
     &:after {
-      @include clearafter;
-
+      content: '.';
+      font-size: 0;
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: calc(100% - 1px);
+      height: 10px;
+      box-shadow: 0 -1px 0 $hairlineColor;
     }
 
+    ul {
+      display: flex;
+      flex-direction: row;
+      width: calc(100% - 1px);
+
+      li {
+        a {
+          position: relative;
+          display: block;
+          padding: 8px 24px;
+          white-space: nowrap;
+          overflow: hidden;
+          box-sizing: border-box;
+
+          &:hover {
+            text-decoration: none;
+          }
+
+          &:not(.sel) {
+            color: $mediumDarkTextColor;
+
+            &:hover {
+              color: $linkColor;
+            }
+          }
+
+          &.sel {
+            color: $textColor;
+            background: #fff;
+            cursor: default;
+            background-clip: padding-box;
+            border-radius: $menuBorderRadius $menuBorderRadius 0 0;
+            border: solid $hairlineColorAlpha;
+            border-width: 1px 1px 0 1px;
+            z-index: 1;
+
+          }
+        }
+
+        &:first-child {
+          a {
+
+            &.sel {
+              @include border-left(1px solid $hairlineColorAlpha);
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    flex: 1;
+    background: #fff;
+    background-clip: padding-box;
+    padding: 12px 24px 24px;
+    word-wrap: break-word;
+    @include border-right(1px solid $hairlineColorAlpha);
+    @include border-left(1px solid $hairlineColorAlpha);
+    border-bottom: 1px solid $hairlineColorAlpha;
   }
 
   .type {

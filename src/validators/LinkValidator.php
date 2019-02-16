@@ -6,10 +6,10 @@
  * @link       https://www.flipboxfactory.com/software/link/
  */
 
-namespace flipbox\link\validators;
+namespace flipbox\craft\link\validators;
 
 use craft\base\Element;
-use flipbox\link\types\TypeInterface;
+use flipbox\craft\link\types\TypeInterface;
 use yii\validators\Validator;
 
 /**

@@ -10,6 +10,8 @@
             $nav: null,
             namespace: null,
 
+            $selectedTab: null,
+
             init: function ($typeSelect, $typesContainer, namespace) {
                 this.$typeSelect = $typeSelect;
                 this.$spinner = $('<div class="spinner hidden"/>').insertAfter(this.$typeSelect.parent());
@@ -18,10 +20,10 @@
                 this.$nav = $typesContainer.children('.tabs').children('ul');
                 this.namespace = namespace;
 
+                this.initTabs()
+
                 // Load existing
                 $.each(this.$nav.children(), $.proxy(function (index, value) {
-                    console.log(index, value);
-
                     var $nav = $(value);
                     var $link = $nav.children('a');
                     var id = $link.attr('href');
@@ -30,16 +32,88 @@
 
                     LinkType.setHtml($(id));
                     LinkType.$nav = $(value);
-
-                    console.log(LinkType)
-
                 }, this));
 
                 this.addListener(this.$typeSelect, 'change', 'onTypeChange');
             },
+
+            initTabs: function() {
+                this.$selectedTab = null;
+
+                var $tabs = this.$nav.find('> li');
+                var tabs = [];
+                var tabWidths = [];
+                var totalWidth = 0;
+                var i, a, href;
+
+                for (i = 0; i < $tabs.length; i++) {
+                    tabs[i] = $($tabs[i]);
+                    tabWidths[i] = tabs[i].width();
+                    totalWidth += tabWidths[i];
+
+                    // Does it link to an anchor?
+                    a = tabs[i].children('a');
+                    href = a.attr('href');
+                    if (href && href.charAt(0) === '#') {
+                        this.addListener(a, 'click', function(ev) {
+                            ev.preventDefault();
+                            this.selectTab(ev.currentTarget);
+                        });
+
+                        if (href === document.location.hash) {
+                            this.selectTab(a);
+                        }
+                    }
+
+                    if (!this.$selectedTab && a.hasClass('sel')) {
+                        this.$selectedTab = a;
+                    }
+                }
+
+                // Now set their max widths
+                for (i = 0; i < $tabs.length; i++) {
+                    tabs[i].css('max-width', (100 * tabWidths[i] / totalWidth) + '%');
+                }
+            },
+
+            selectTab: function(tab) {
+                var $tab = $(tab);
+
+                if (this.$selectedTab) {
+                    if (this.$selectedTab.get(0) === $tab.get(0)) {
+                        return;
+                    }
+                    this.deselectTab();
+                }
+
+                $tab.addClass('sel');
+                var href = $tab.attr('href')
+                $(href).removeClass('hidden');
+                if (typeof history !== 'undefined') {
+                    history.replaceState(undefined, undefined, href);
+                }
+                Garnish.$win.trigger('resize');
+                // Fixes Redactor fixed toolbars on previously hidden panes
+                Garnish.$doc.trigger('scroll');
+                this.$selectedTab = $tab;
+            },
+
+            deselectTab: function() {
+                if (!this.$selectedTab) {
+                    return;
+                }
+
+                this.$selectedTab.removeClass('sel');
+                if (this.$selectedTab.attr('href').charAt(0) === '#') {
+                    $(this.$selectedTab.attr('href')).addClass('hidden');
+                }
+                this.$selectedTab = null;
+            },
+
             getCount: function () {
                 return this.$nav.children().length
             },
+
             onTypeChange: function (ev) {
                 this.$spinner.removeClass('hidden');
 
@@ -69,40 +143,38 @@
                     }
                 }, this));
             },
+            
             appendType: function (LinkType) {
-
                 // Append new html and nav
                 this.$types.append(LinkType.$html);
                 this.$nav.append(LinkType.$nav);
 
+                // refresh
                 this.refresh();
 
+                // Select tab
+                this.selectTab(LinkType.$nav.children('a'))
             },
-            refresh: function () {
 
-                this.$typeSelect.val(0);
-
-                // Remove existing pane
-                var pane = this.$typesContainer.data('pane');
-
-                if (pane) {
-                    pane.deselectTab();
-                    pane.destroy();
-                }
-
+            selectFirstTab: function() {
                 if (this.$nav.children().length <= 0) {
-                    this.$typesContainer.hide();
                     return;
                 }
 
-                // Init new tabs
-                this.$typesContainer.show()
-                    .pane();
+                this.selectTab($(this.$nav.children()[0]).children('a'))
+            },
+            
+            refresh: function () {
+                if (this.$nav.children().length <= 0) {
+                    this.$typesContainer.hide();
+                    return;
+                } else {
+                    this.$typesContainer.show();
+                }
 
                 Craft.initUiElements(this.$typesContainer);
-
+                this.initTabs();
             }
-
         }
     );
 
@@ -134,7 +206,7 @@
                 if (label) {
                     this.$link = $('<a/>', {
                         text: this.label,
-                        class: 'tab sel',
+                        class: 'tab',
                         href: '#' + this.id
                     });
                     this.$nav = $('<li/>').html(this.$link);
@@ -152,7 +224,8 @@
                 e.preventDefault();
                 this.$html.remove();
                 this.$nav.remove();
-                this.manager.refresh(true);
+                this.manager.refresh();
+                this.manager.selectFirstTab();
                 this.destroy();
             }
         }

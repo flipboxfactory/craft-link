@@ -1,0 +1,15 @@
+{% extends "link/_components/fieldtypes/Link/types/element/settings" %}
+{% import "_includes/forms" as forms %}
+
+{% block extras %}
+    {{ parent() }}
+
+    {{ forms.textField({
+        label: "Uri Path"|t('link'),
+        instructions: "Enter the text you want to appear on the {type} selection input."|t('app', { type: type.displayName()|lower }),
+        id: 'uriPath',
+        name: 'uriPath',
+        value: type.uriPath,
+        errors: type.getErrors('uriPath')
+    }) }}
+{% endblock %}
