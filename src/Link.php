@@ -135,18 +135,23 @@ class Link extends Plugin
      * The translation will be conducted according to the message category and the target language will be used.
      *
      * You can add parameters to a translation message that will be substituted with the corresponding value after
-     * translation. The format for this is to use curly brackets around the parameter name as you can see in the following example:
+     * translation. The format for this is to use curly brackets around the parameter name as you can see in the
+     * following example:
      *
      * ```php
      * $username = 'Alexander';
      * echo \flipbox\craft\link\Link::t('Hello, {username}!', ['username' => $username]);
      * ```
      *
-     * Further formatting of message parameters is supported using the [PHP intl extensions](http://www.php.net/manual/en/intro.intl.php)
+     * Further formatting of message parameters is supported using the [PHP
+     * intl...craft-link/src/web/assets/settings/dist/LinkConfiguration.min.jsgit add *
+     * extensions](http://www.php.net/manual/en/intro.intl.php)
      * message formatter. See [[\Craft::t()]] for more details.
      *
      * @param  string $message  the message to be translated.
-     * @param  array  $params   the parameters that will be used to replace the corresponding placeholders in the message.
+     * @param  array  $params   the parameters that will be used to replace the corresponding
+     * placeholders in...craft-link/src/web/assets/settings/dist/LinkConfiguration.min.js
+     * the message.
      * @param  string $language the language code (e.g. `en-US`, `en`). If this is null, the current
      * [[\yii\base\Application::language|application language]] will be used.
      * @return string the translated message.

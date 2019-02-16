@@ -1,9 +1,9 @@
 (function ($) {
     /**
- * global: Craft 
+ * global: Craft
 */
     /**
- * global: Garnish 
+ * global: Garnish
 */
     Craft.LinkTypeManager = Garnish.Base.extend(
         {
@@ -28,7 +28,8 @@
 
                 // Load existing
                 $.each(
-                    this.$nav.children(), $.proxy(
+                    this.$nav.children(),
+                    $.proxy(
                         function (index, value) {
                             var $nav = $(value);
                             var $link = $nav.children('a');
@@ -38,14 +39,15 @@
 
                             LinkType.setHtml($(id));
                             LinkType.$nav = $(value);
-                        }, this
+                        },
+                        this
                     )
                 );
 
                 this.addListener(this.$typeSelect, 'change', 'onTypeChange');
             },
 
-            initTabs: function() {
+            initTabs: function () {
                 this.$selectedTab = null;
 
                 var $tabs = this.$nav.find('> li');
@@ -64,7 +66,9 @@
                     href = a.attr('href');
                     if (href && href.charAt(0) === '#') {
                         this.addListener(
-                            a, 'click', function(ev) {
+                            a,
+                            'click',
+                            function (ev) {
                                 ev.preventDefault();
                                 this.selectTab(ev.currentTarget);
                             }
@@ -86,7 +90,7 @@
                 }
             },
 
-            selectTab: function(tab) {
+            selectTab: function (tab) {
                 var $tab = $(tab);
 
                 if (this.$selectedTab) {
@@ -108,7 +112,7 @@
                 this.$selectedTab = $tab;
             },
 
-            deselectTab: function() {
+            deselectTab: function () {
                 if (!this.$selectedTab) {
                     return;
                 }
@@ -139,7 +143,9 @@
                 };
 
                 Craft.postActionRequest(
-                    'link/type/settings', data, $.proxy(
+                    'link/type/settings',
+                    data,
+                    $.proxy(
                         function (response, textStatus) {
                             this.$spinner.addClass('hidden');
 
@@ -155,7 +161,8 @@
                                 Craft.appendHeadHtml(response.headHtml);
                                 Craft.appendFootHtml(response.footHtml);
                             }
-                        }, this
+                        },
+                        this
                     )
                 );
             },
@@ -172,7 +179,7 @@
                 this.selectTab(LinkType.$nav.children('a'))
             },
 
-            selectFirstTab: function() {
+            selectFirstTab: function () {
                 if (this.$nav.children().length <= 0) {
                     return;
                 }
@@ -213,7 +220,8 @@
                 if (html) {
                     this.setHtml(
                         $(
-                            '<div/>', {
+                            '<div/>',
+                            {
                                 class: 'type',
                                 id: this.id
                             }
@@ -223,7 +231,8 @@
 
                 if (label) {
                     this.$link = $(
-                        '<a/>', {
+                        '<a/>',
+                        {
                             text: this.label,
                             class: 'tab',
                             href: '#' + this.id

@@ -170,7 +170,8 @@ trait BaseTrait
         );
 
         array_walk(
-            $properties, function (&$v, $k) {
+            $properties,
+            function (&$v, $k) {
                 $v = $k . '="' . $v . '"';
             }
         );

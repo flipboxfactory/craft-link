@@ -80,7 +80,6 @@ abstract class AbstractType extends Model implements TypeInterface
             'overrideText'
         )
         ) {
-
             $properties['overrideText'] = $overrideText;
         }
 

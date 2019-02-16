@@ -33,10 +33,9 @@ class m190110_100614_link_namespace extends Migration
         $success = true;
 
         /**
- * @var Field $record 
+ * @var Field $record
 */
         foreach ($records as $record) {
-
             $record->type = Link::class;
 
             $settings = $record->settings ?? [];
@@ -54,7 +53,6 @@ class m190110_100614_link_namespace extends Migration
                     "flipbox\\link"
                 )
                 ) {
-
                     // Adjust namespacing
                     $type['class'] = StringHelper::replace(
                         $class,
@@ -68,7 +66,6 @@ class m190110_100614_link_namespace extends Migration
                         $type
                     )
                     ) {
-
                         $type['allowText'] = (bool)(ArrayHelper::remove(
                             $type,
                             'showText',
@@ -94,7 +91,6 @@ class m190110_100614_link_namespace extends Migration
                     ArrayHelper::remove($type, 'overrideText');
                     ArrayHelper::remove($type, 'showText');
                 }
-
             }
 
             // Set types back to settings
@@ -107,7 +103,6 @@ class m190110_100614_link_namespace extends Migration
             if (!$record->save(true, ['type, settings'])) {
                 $success = false;
             }
-
         }
 
         return $success;

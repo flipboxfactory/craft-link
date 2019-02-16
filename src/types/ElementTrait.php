@@ -158,7 +158,7 @@ trait ElementTrait
         $this->elementId = (int)$elementId;
 
         // Clear element cache on change
-        if ($this->element === false 
+        if ($this->element === false
             || ($this->element && $this->element->getId() !== $this->elementId)
         ) {
             $this->element = null;
@@ -251,7 +251,9 @@ trait ElementTrait
         }
 
         return Craft::$app->getView()->renderTemplateMacro(
-            '_includes/forms', 'selectField', [
+            '_includes/forms',
+            'selectField',
+            [
             [
                 'label' => Craft::t('app', 'View Mode'),
                 'instructions' => Craft::t('app', 'Choose how the field should look for authors.'),
@@ -292,7 +294,7 @@ trait ElementTrait
     protected function targetSiteId(ElementInterface $element = null): int
     {
         /**
- * @var Element|null $element 
+ * @var Element|null $element
 */
         if (Craft::$app->getIsMultiSite()) {
             if ($this->targetSiteId) {

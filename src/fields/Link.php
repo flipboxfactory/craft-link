@@ -264,7 +264,7 @@ class Link extends Field
     {
         // Create new
         /**
- * @var TypeInterface $type 
+ * @var TypeInterface $type
 */
         if (!$type = $this->createType($config)) {
             return null;
