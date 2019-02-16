@@ -158,8 +158,8 @@ trait ElementTrait
         $this->elementId = (int)$elementId;
 
         // Clear element cache on change
-        if ($this->element === false ||
-            ($this->element && $this->element->getId() !== $this->elementId)
+        if ($this->element === false 
+            || ($this->element && $this->element->getId() !== $this->elementId)
         ) {
             $this->element = null;
         }
@@ -250,7 +250,8 @@ trait ElementTrait
             $viewModeOptions[] = ['label' => $label, 'value' => $key];
         }
 
-        return Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'selectField', [
+        return Craft::$app->getView()->renderTemplateMacro(
+            '_includes/forms', 'selectField', [
             [
                 'label' => Craft::t('app', 'View Mode'),
                 'instructions' => Craft::t('app', 'Choose how the field should look for authors.'),
@@ -259,7 +260,8 @@ trait ElementTrait
                 'options' => $viewModeOptions,
                 'value' => $this->viewMode
             ]
-        ]);
+            ]
+        );
     }
 
     /**
@@ -283,13 +285,15 @@ trait ElementTrait
     /**
      * Returns the site ID that target elements should have.
      *
-     * @param ElementInterface|null $element
+     * @param  ElementInterface|null $element
      * @return int
      * @throws \craft\errors\SiteNotFoundException
      */
     protected function targetSiteId(ElementInterface $element = null): int
     {
-        /** @var Element|null $element */
+        /**
+ * @var Element|null $element 
+*/
         if (Craft::$app->getIsMultiSite()) {
             if ($this->targetSiteId) {
                 return $this->targetSiteId;
@@ -316,8 +320,8 @@ trait ElementTrait
     /**
      * Returns an array of variables that should be passed to the input template.
      *
-     * @param Link $field
-     * @param ElementInterface|null $element
+     * @param  Link                  $field
+     * @param  ElementInterface|null $element
      * @return array
      * @throws \craft\errors\SiteNotFoundException
      */
@@ -342,8 +346,10 @@ trait ElementTrait
             'sourceElementId' => !empty($element->id) ? $element->id : null,
             'limit' => 1,
             'viewMode' => $this->viewMode(),
-            'selectionLabel' => $this->selectionLabel ? Craft::t('site',
-                $this->selectionLabel) : static::defaultSelectionLabel(),
+            'selectionLabel' => $this->selectionLabel ? Craft::t(
+                'site',
+                $this->selectionLabel
+            ) : static::defaultSelectionLabel(),
         ];
     }
 

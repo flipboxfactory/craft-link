@@ -70,7 +70,9 @@ class User extends AbstractElement
      */
     public function getElementText(): string
     {
-        /** @var \craft\elements\User $element */
+        /**
+ * @var \craft\elements\User $element 
+*/
         if (!$element = $this->getElement()) {
             return '';
         }

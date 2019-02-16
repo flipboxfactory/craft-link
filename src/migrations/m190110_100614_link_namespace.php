@@ -23,14 +23,18 @@ class m190110_100614_link_namespace extends Migration
     public function safeUp()
     {
         $records = Field::find()
-            ->andWhere([
+            ->andWhere(
+                [
                 'type' => "flipbox\\link\\fields\\Link"
-            ])
+                ]
+            )
             ->all();
 
         $success = true;
 
-        /** @var Field $record */
+        /**
+ * @var Field $record 
+*/
         foreach ($records as $record) {
 
             $record->type = Link::class;
@@ -48,7 +52,8 @@ class m190110_100614_link_namespace extends Migration
                 if (StringHelper::startsWith(
                     $class,
                     "flipbox\\link"
-                )) {
+                )
+                ) {
 
                     // Adjust namespacing
                     $type['class'] = StringHelper::replace(
@@ -61,7 +66,8 @@ class m190110_100614_link_namespace extends Migration
                     if (!ArrayHelper::keyExists(
                         'allowText',
                         $type
-                    )) {
+                    )
+                    ) {
 
                         $type['allowText'] = (bool)(ArrayHelper::remove(
                             $type,

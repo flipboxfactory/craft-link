@@ -95,9 +95,11 @@ class Link extends Plugin
      */
     protected function registerTypes()
     {
-        $event = new RegisterLinkTypes([
+        $event = new RegisterLinkTypes(
+            [
             'types' => static::FIRST_PARTY_TYPES
-        ]);
+            ]
+        );
 
         $this->trigger(
             self::EVENT_REGISTER_TYPES,
@@ -143,9 +145,9 @@ class Link extends Plugin
      * Further formatting of message parameters is supported using the [PHP intl extensions](http://www.php.net/manual/en/intro.intl.php)
      * message formatter. See [[\Craft::t()]] for more details.
      *
-     * @param string $message the message to be translated.
-     * @param array $params the parameters that will be used to replace the corresponding placeholders in the message.
-     * @param string $language the language code (e.g. `en-US`, `en`). If this is null, the current
+     * @param  string $message  the message to be translated.
+     * @param  array  $params   the parameters that will be used to replace the corresponding placeholders in the message.
+     * @param  string $language the language code (e.g. `en-US`, `en`). If this is null, the current
      * [[\yii\base\Application::language|application language]] will be used.
      * @return string the translated message.
      */

@@ -256,14 +256,16 @@ class Link extends Field
 
     /**
      * @param string $identifier
-     * @param array $config
+     * @param array  $config
      * @return TypeInterface|null
      * @throws \yii\base\InvalidConfigException
      */
     private function resolveConfig(string $identifier, array $config)
     {
         // Create new
-        /** @var TypeInterface $type */
+        /**
+ * @var TypeInterface $type 
+*/
         if (!$type = $this->createType($config)) {
             return null;
         }

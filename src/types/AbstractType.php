@@ -78,7 +78,8 @@ abstract class AbstractType extends Model implements TypeInterface
         if ($overrideText = ArrayHelper::remove(
             $properties,
             'overrideText'
-        )) {
+        )
+        ) {
 
             $properties['overrideText'] = $overrideText;
         }

@@ -162,14 +162,18 @@ trait BaseTrait
 
         $text = ArrayHelper::remove($attributes, 'text', $this->getText());
 
-        $properties = array_filter(array_merge(
-            $defaults,
-            $attributes
-        ));
+        $properties = array_filter(
+            array_merge(
+                $defaults,
+                $attributes
+            )
+        );
 
-        array_walk($properties, function (&$v, $k) {
-            $v = $k . '="' . $v . '"';
-        });
+        array_walk(
+            $properties, function (&$v, $k) {
+                $v = $k . '="' . $v . '"';
+            }
+        );
 
         return '<a ' . implode(' ', $properties) . '>' . $text . '</a>';
     }

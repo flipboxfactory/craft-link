@@ -1,6 +1,10 @@
 (function ($) {
-    /** global: Craft */
-    /** global: Garnish */
+    /**
+ * global: Craft 
+*/
+    /**
+ * global: Garnish 
+*/
     Craft.LinkTypeManager = Garnish.Base.extend(
         {
             $typeSelect: null,
@@ -23,16 +27,20 @@
                 this.initTabs()
 
                 // Load existing
-                $.each(this.$nav.children(), $.proxy(function (index, value) {
-                    var $nav = $(value);
-                    var $link = $nav.children('a');
-                    var id = $link.attr('href');
+                $.each(
+                    this.$nav.children(), $.proxy(
+                        function (index, value) {
+                            var $nav = $(value);
+                            var $link = $nav.children('a');
+                            var id = $link.attr('href');
 
-                    var LinkType = new Craft.LinkType(this);
+                            var LinkType = new Craft.LinkType(this);
 
-                    LinkType.setHtml($(id));
-                    LinkType.$nav = $(value);
-                }, this));
+                            LinkType.setHtml($(id));
+                            LinkType.$nav = $(value);
+                        }, this
+                    )
+                );
 
                 this.addListener(this.$typeSelect, 'change', 'onTypeChange');
             },
@@ -55,10 +63,12 @@
                     a = tabs[i].children('a');
                     href = a.attr('href');
                     if (href && href.charAt(0) === '#') {
-                        this.addListener(a, 'click', function(ev) {
-                            ev.preventDefault();
-                            this.selectTab(ev.currentTarget);
-                        });
+                        this.addListener(
+                            a, 'click', function(ev) {
+                                ev.preventDefault();
+                                this.selectTab(ev.currentTarget);
+                            }
+                        );
 
                         if (href === document.location.hash) {
                             this.selectTab(a);
@@ -128,20 +138,26 @@
                     namespace: this.namespace
                 };
 
-                Craft.postActionRequest('link/type/settings', data, $.proxy(function (response, textStatus) {
-                    this.$spinner.addClass('hidden');
+                Craft.postActionRequest(
+                    'link/type/settings', data, $.proxy(
+                        function (response, textStatus) {
+                            this.$spinner.addClass('hidden');
 
-                    if (textStatus == 'success') {
-                        this.appendType(new Craft.LinkType(
-                            this,
-                            response.label,
-                            response.paneHtml
-                        ));
+                            if (textStatus == 'success') {
+                                this.appendType(
+                                    new Craft.LinkType(
+                                        this,
+                                        response.label,
+                                        response.paneHtml
+                                    )
+                                );
 
-                        Craft.appendHeadHtml(response.headHtml);
-                        Craft.appendFootHtml(response.footHtml);
-                    }
-                }, this));
+                                Craft.appendHeadHtml(response.headHtml);
+                                Craft.appendFootHtml(response.footHtml);
+                            }
+                        }, this
+                    )
+                );
             },
             
             appendType: function (LinkType) {
@@ -196,19 +212,23 @@
 
                 if (html) {
                     this.setHtml(
-                        $('<div/>', {
-                            class: 'type',
-                            id: this.id
-                        }).html(html)
+                        $(
+                            '<div/>', {
+                                class: 'type',
+                                id: this.id
+                            }
+                        ).html(html)
                     );
                 }
 
                 if (label) {
-                    this.$link = $('<a/>', {
-                        text: this.label,
-                        class: 'tab',
-                        href: '#' + this.id
-                    });
+                    this.$link = $(
+                        '<a/>', {
+                            text: this.label,
+                            class: 'tab',
+                            href: '#' + this.id
+                        }
+                    );
                     this.$nav = $('<li/>').html(this.$link);
                 }
 

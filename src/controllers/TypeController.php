@@ -55,11 +55,13 @@ class TypeController extends Controller
             ]
         );
 
-        return $this->asJson([
+        return $this->asJson(
+            [
             'label' => $type::displayName(),
             'paneHtml' => $html,
             'headHtml' => $view->getHeadHtml(),
             'footHtml' => $view->getBodyHtml(),
-        ]);
+            ]
+        );
     }
 }
