@@ -35,12 +35,14 @@ trait ElementTrait
     private $element;
 
     /**
-     * @var string|string[]|null The source keys that this field can relate elements from (used if [[allowMultipleSources]] is set to true)
+     * @var string|string[]|null The source keys that this field can relate elements from (used if
+     * [[allowMultipleSources]] is set to true)
      */
     public $sources = '*';
 
     /**
-     * @var string|null The source key that this field can relate elements from (used if [[allowMultipleSources]] is set to false)
+     * @var string|null The source key that this field can relate elements from (used if
+     * [[allowMultipleSources]] is set to false)
      */
     public $source;
 
