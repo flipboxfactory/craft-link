@@ -9,6 +9,7 @@
 namespace flipbox\craft\link\types;
 
 use Craft;
+use craft\base\Element;
 use craft\base\ElementInterface;
 use flipbox\craft\link\fields\Link;
 use yii\base\Model;
@@ -52,6 +53,7 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
      */
     public function getElementText(): string
     {
+        /** @var Element $element */
         if (!$element = $this->getElement()) {
             return '';
         }
