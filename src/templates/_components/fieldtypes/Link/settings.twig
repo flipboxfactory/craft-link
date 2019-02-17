@@ -43,11 +43,11 @@ label: "-- Add Type --"|t('link')
 </div>
 
 {{ forms.textField({
-    label: 'Select label'|t('link'),
-    instructions: 'The label that content publishers will use to select the link type.'|t('link'),
-    name: 'selectLabel',
-    id: 'selectLabel',
-    value: field.selectLabel
+    label: 'Selection label'|t('link'),
+    instructions: 'Enter the text you want to appear on the link type selection input.'|t('link'),
+    name: 'selectionLabel',
+    id: 'selectionLabel',
+    value: field.selectionLabel
 }) }}
 
 {% set js %}

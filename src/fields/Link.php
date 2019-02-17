@@ -30,7 +30,7 @@ class Link extends Field implements PreviewableFieldInterface
     /**
      * @var string
      */
-    public $selectLabel = ' -- Select link type --';
+    public $selectionLabel = ' -- Select link type --';
 
     /**
      * Type objects that have been configured via the admin
