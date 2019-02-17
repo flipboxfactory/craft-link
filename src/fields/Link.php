@@ -27,6 +27,10 @@ use yii\db\Schema;
  */
 class Link extends Field implements PreviewableFieldInterface
 {
+    /**
+     * @var string
+     */
+    public $selectLabel = ' -- Select link type --';
 
     /**
      * Type objects that have been configured via the admin

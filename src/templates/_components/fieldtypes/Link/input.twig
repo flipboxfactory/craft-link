@@ -3,7 +3,7 @@
 {% set identifierField = 'identifier' %}
 
 {% set options = [{
-label: '-- Select type --'|t('link')
+label: field.selectLabel|t('link')
 }] %}
 {% for key, type in field.types %}
     {% set options = options|merge([{

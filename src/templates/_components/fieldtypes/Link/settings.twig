@@ -42,6 +42,14 @@ label: "-- Add Type --"|t('link')
     </div>
 </div>
 
+{{ forms.textField({
+    label: 'Select label'|t('link'),
+    instructions: 'The label that content publishers will use to select the link type.'|t('link'),
+    name: 'selectLabel',
+    id: 'selectLabel',
+    value: field.selectLabel
+}) }}
+
 {% set js %}
 
     {#<script>#}
