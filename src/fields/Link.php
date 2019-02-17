@@ -11,6 +11,7 @@ namespace flipbox\craft\link\fields;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\base\PreviewableFieldInterface;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Db;
 use craft\helpers\Json;
@@ -24,7 +25,7 @@ use yii\db\Schema;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Link extends Field
+class Link extends Field implements PreviewableFieldInterface
 {
 
     /**
@@ -100,6 +101,18 @@ class Link extends Field
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        if ($value instanceof TypeInterface) {
+            return (string) $value;
+        }
+
+        return '';
     }
 
     /**
@@ -264,8 +277,8 @@ class Link extends Field
     {
         // Create new
         /**
- * @var TypeInterface $type
-*/
+         * @var TypeInterface $type
+         */
         if (!$type = $this->createType($config)) {
             return null;
         }

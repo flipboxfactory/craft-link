@@ -7,8 +7,8 @@ label: "-- Add Type --"|t('link')
 }] %}
 {% for type in types %}
     {% set typeOptions = typeOptions|merge([{
-    label: type.displayName,
-    value: className(type)
+        label: type.displayName,
+        value: className(type)
     }]) %}
 {% endfor %}
 

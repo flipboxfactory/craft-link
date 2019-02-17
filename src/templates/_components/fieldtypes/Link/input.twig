@@ -7,7 +7,7 @@ label: '-- Select type --'|t('link')
 }] %}
 {% for key, type in field.types %}
     {% set options = options|merge([{
-        label: type.displayName(),
+        label: type.settings.label ?? type.displayName,
         value: key
     }]) %}
 {% endfor %}
@@ -21,16 +21,16 @@ label: '-- Select type --'|t('link')
                 id: identifierField,
                 options: options,
                 value: value ? value.identifier : null,
-                toggle: activeIdentifier
+                toggle: true
             }) }}
         </div>
         <div class="flex-grow">
-            {{ renderTypes(activeIdentifier, field.types, field, value, element) }}
+            {{ renderTypes(activeIdentifier, field, value, element) }}
         </div>
     </div>
 {% endnamespace %}
 
-{% macro renderTypes(activeIdentifier, types, field, value, element) %}
+{% macro renderTypes(activeIdentifier, field, value, element) %}
     {% for key, type in field.types %}
         {% set isCurrent = activeIdentifier == type.identifier %}
         {% set type = isCurrent and value ? value : type %}

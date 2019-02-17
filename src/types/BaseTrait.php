@@ -45,6 +45,11 @@ trait BaseTrait
     /**
      * @var string
      */
+    public $label;
+
+    /**
+     * @var string
+     */
     protected $identifier;
 
     /**
@@ -125,6 +130,7 @@ trait BaseTrait
     public function settings(): array
     {
         return [
+            'label',
             'showTarget',
             'allowText',
             'requireText'

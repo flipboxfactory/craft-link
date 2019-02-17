@@ -2,6 +2,14 @@
 {% set textInstructions = textInstructions ?? 'Allow content manager to defined custom text.'|t('link') %}
 
 {% block toggles %}
+    {{ forms.textField({
+        label: 'Label'|t('link'),
+        instructions: 'The name of the link that content publishers will reference.'|t('link'),
+        name: 'label',
+        id: 'label',
+        value: type.settings.label ?: type.displayName
+    }) }}
+
     {{ forms.lightswitchField({
         label: 'Override Text'|t('link'),
         instructions: textInstructions,
