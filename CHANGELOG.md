@@ -6,6 +6,9 @@ All Notable changes to `flipboxfactory/craft-link` will be documented in this fi
 - Email link type
 - Enhanced readme/docs
 
+### Changed
+- User link type default uri string is `mailto:{email}`
+
 ## 1.0.0 - 2019-2-17
 ### Changed
 - Base namespacing from `flipbox\link` to `flipbox\craft\link`

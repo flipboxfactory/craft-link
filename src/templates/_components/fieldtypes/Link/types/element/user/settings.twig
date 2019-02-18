@@ -5,11 +5,11 @@
     {{ parent() }}
 
     {{ forms.textField({
-        label: "Uri Path"|t('link'),
-        instructions: "Enter the text you want to appear on the {type} selection input."|t('app', { type: type.displayName()|lower }),
-        id: 'uriPath',
-        name: 'uriPath',
-        value: type.uriPath,
-        errors: type.getErrors('uriPath')
+        label: "Uri"|t('link'),
+        instructions: "Enter the link uri string <small class='light' style='font-size: small'>(you may reference User element attributes within brackets. Ex: {email}, {id}, {username})</small>"|t('link'),
+        id: 'uri',
+        name: 'uri',
+        value: type.uri,
+        errors: type.getErrors('uri')
     }) }}
 {% endblock %}

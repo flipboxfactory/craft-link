@@ -10,7 +10,6 @@ namespace flipbox\craft\link\types;
 
 use Craft;
 use craft\elements\User as UserElement;
-use craft\helpers\UrlHelper;
 use flipbox\craft\link\Link;
 
 /**
@@ -34,7 +33,7 @@ class User extends AbstractElement
     /**
      * @var string
      */
-    public $uriPath = '';
+    public $uri = 'mailto:{email}';
 
     /**
      * @inheritdoc
@@ -60,7 +59,7 @@ class User extends AbstractElement
         return array_merge(
             parent::settings(),
             [
-                'uriPath'
+                'uri'
             ]
         );
     }
@@ -70,13 +69,11 @@ class User extends AbstractElement
      */
     public function getElementText(): string
     {
-        /**
- * @var \craft\elements\User $element
-*/
+        /** @var \craft\elements\User $element */
         if (!$element = $this->getElement()) {
             return '';
         }
-        return $element->getFullName();
+        return (string) $element->getFullName();
     }
 
     /**
@@ -90,11 +87,51 @@ class User extends AbstractElement
             return '';
         }
 
-        return UrlHelper::url(
-            Craft::$app->getView()->renderObjectTemplate(
-                $this->uriPath,
-                $element
-            )
+        return Craft::$app->getView()->renderObjectTemplate(
+            $this->uri,
+            $element
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(
+            parent::rules(),
+            [
+                [
+                    [
+                        'uri'
+                    ],
+                    'required',
+                    'on' => [
+                        self::SCENARIO_INPUT
+                    ]
+                ],
+                [
+                    [
+                        'uri'
+                    ],
+                    'safe',
+                    'on' => [
+                        self::SCENARIO_DEFAULT
+                    ]
+                ]
+            ]
+        );
+    }
+
+    /**
+     * @param $uri
+     * @return $this
+     *
+     * @deprecated Handling legacy setting attribute
+     */
+    public function setUriPath($uri)
+    {
+        $this->uri = $uri;
+        return $this;
     }
 }
