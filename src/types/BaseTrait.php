@@ -2,8 +2,8 @@
 
 /**
  * @copyright  Copyright (c) Flipbox Digital Limited
- * @license    https://flipboxfactory.com/software/link/license
- * @link       https://www.flipboxfactory.com/software/link/
+ * @license    https://raw.githubusercontent.com/flipboxfactory/craft-link/master/LICENSE
+ * @link       https://github.com/flipboxfactory/craft-link
  */
 
 namespace flipbox\craft\link\types;
