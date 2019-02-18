@@ -16,6 +16,7 @@ use flipbox\craft\link\events\RegisterLinkTypes;
 use flipbox\craft\link\fields\Link as LinkField;
 use flipbox\craft\link\types\Asset;
 use flipbox\craft\link\types\Category;
+use flipbox\craft\link\types\Email;
 use flipbox\craft\link\types\Entry;
 use flipbox\craft\link\types\TypeInterface;
 use flipbox\craft\link\types\Url;
@@ -39,6 +40,7 @@ class Link extends Plugin
     const FIRST_PARTY_TYPES = [
         Asset::class,
         Category::class,
+        Email::class,
         Entry::class,
         Url::class,
         User::class

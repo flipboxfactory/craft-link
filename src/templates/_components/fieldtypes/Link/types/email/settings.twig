@@ -1,0 +1,14 @@
+{% extends "link/_components/fieldtypes/Link/types/settings" %}
+{% import "_includes/forms" as forms %}
+
+{% set textInstructions = textInstructions ?? 'Allow content manager enter text other than the email address.'|t('link') %}
+
+{% block extras %}
+    {{ forms.textField({
+        label: 'Email Placeholder Text'|t('link'),
+        instructions: 'The text that will be shown if the url doesn’t have a value.',
+        name: 'placeholder',
+        id: 'placeholder',
+        value: type.settings.placeholder
+    }) }}
+{% endblock %}
