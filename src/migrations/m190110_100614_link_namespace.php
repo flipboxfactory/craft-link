@@ -100,7 +100,7 @@ class m190110_100614_link_namespace extends Migration
             $record->settings = $settings;
 
             // Save
-            if (!$record->save(true, ['type, settings'])) {
+            if (!$record->save()) {
                 $success = false;
             }
         }

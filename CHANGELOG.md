@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
+## 1.1.1 - 2019-2-20
+### Fixed
+- Migration would not convert legacy field type/types to new namespacing
+
 ## 1.1.0 - 2019-2-18
 ### Added
 - Email link type
