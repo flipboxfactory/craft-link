@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
+## 1.1.3 - 2019-3-8
+### Added
+- Url links will not 
+
 ## 1.1.2 - 2019-3-8
 ### Fixed
 - Multi-site localization issues w/ element link types

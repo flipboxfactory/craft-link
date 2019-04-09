@@ -8,6 +8,8 @@
 
 namespace flipbox\craft\link\types;
 
+use flipbox\craft\link\Link;
+
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
@@ -30,11 +32,6 @@ class Url extends AbstractType
     const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
 
     /**
-     * @var bool
-     */
-    public $allowEmptyText = true;
-
-    /**
      * @var
      */
     public $url;
@@ -49,7 +46,7 @@ class Url extends AbstractType
      */
     public static function displayName(): string
     {
-        return \flipbox\craft\link\Link::t('Url');
+        return Link::t('Url');
     }
 
     /**
@@ -57,11 +54,17 @@ class Url extends AbstractType
      */
     public function getText()
     {
-        if ($this->allowText && $this->overrideText !== null) {
-            return $this->overrideText;
+        if ($this->allowText) {
+            if ($this->overrideText !== null) {
+                return $this->overrideText;
+            }
+
+            if (!$this->requireText) {
+                return null;
+            }
         }
 
-        return $this->allowEmptyText ? null : $this->getUrl();
+        return $this->getUrl();
     }
 
     /**
@@ -80,8 +83,7 @@ class Url extends AbstractType
         return array_merge(
             parent::settings(),
             [
-                'placeholder',
-                'allowEmptyText'
+                'placeholder'
             ]
         );
     }
