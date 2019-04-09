@@ -56,7 +56,7 @@
             <a class="fieldtoggle" data-target="advanced">{{ "Advanced"|t('app') }}</a>
             <div id="advanced" class="hidden">
                 {% block targetSiteField %}
-                    {{ field.getTargetSiteFieldHtml()|raw }}
+                    {{ type.getTargetSiteFieldHtml()|raw }}
                 {% endblock %}
 
                 {% block localizeRelationsField %}
@@ -64,7 +64,7 @@
                         label: "Manage relations on a per-site basis"|t('app'),
                         id: 'localize-relations',
                         name: 'localizeRelations',
-                        checked: field.localizeRelations
+                        checked: type.localizeRelations
                     }) }}
                 {% endblock %}
             </div>

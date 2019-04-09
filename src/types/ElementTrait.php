@@ -62,6 +62,11 @@ trait ElementTrait
     public $selectionLabel;
 
     /**
+     * @var int Whether each site should get its own unique set of relations
+     */
+    public $localizeRelations = false;
+
+    /**
      * @var bool Whether to allow the “Large Thumbnails” view mode
      */
     protected $allowLargeThumbsView = false;
@@ -104,7 +109,8 @@ trait ElementTrait
                 'sources',
                 'targetSiteId',
                 'viewMode',
-                'selectionLabel'
+                'selectionLabel',
+                'localizeRelations'
             ]
         );
     }

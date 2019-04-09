@@ -40,6 +40,22 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
     /**
      * @inheritdoc
      */
+    public function __construct(array $config = [])
+    {
+        // If useTargetSite is in here, but empty, then disregard targetSiteId
+        if (array_key_exists('useTargetSite', $config)) {
+            if (empty($config['useTargetSite'])) {
+                unset($config['targetSiteId']);
+            }
+            unset($config['useTargetSite']);
+        }
+
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getElementUrl(): string
     {
         if (!$element = $this->getElement()) {
@@ -76,6 +92,59 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
                 'input' => $this->inputTemplateVariables($field, $element)
             ]
         );
+    }
+
+    /**
+     * Returns the HTML for the Target Site setting.
+     *
+     * @return string|null
+     */
+    public function getTargetSiteFieldHtml()
+    {
+        /** @var Element $class */
+        $class = static::elementType();
+
+        if (!Craft::$app->getIsMultiSite() || !$class::isLocalized()) {
+            return null;
+        }
+
+        $type = mb_strtolower(static::displayName());
+        $showTargetSite = !empty($this->targetSiteId);
+
+        $html = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField',
+                [
+                    [
+                        'label' => Craft::t('app', 'Relate {type} from a specific site?', ['type' => $type]),
+                        'name' => 'useTargetSite',
+                        'checked' => $showTargetSite,
+                        'toggle' => 'target-site-container'
+                    ]
+                ]) .
+            '<div id="target-site-container"' . (!$showTargetSite ? ' class="hidden"' : '') . '>';
+
+        $siteOptions = [];
+
+        foreach (Craft::$app->getSites()->getAllSites() as $site) {
+            $siteOptions[] = [
+                'label' => Craft::t('site', $site->name),
+                'value' => $site->id
+            ];
+        }
+
+        $html .= Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'selectField',
+            [
+                [
+                    'label' => Craft::t('app', 'Which site should {type} be related from?', ['type' => $type]),
+                    'id' => 'targetSiteId',
+                    'name' => 'targetSiteId',
+                    'options' => $siteOptions,
+                    'value' => $this->targetSiteId
+                ]
+            ]);
+
+        $html .= '</div>';
+
+        return $html;
     }
 
     /**

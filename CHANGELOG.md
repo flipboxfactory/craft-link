@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
+## Unreleased
+### Fixed
+- Multi-site localization issues w/ element link types
+
 ## 1.1.1 - 2019-2-20
 ### Fixed
 - Migration would not convert legacy field type/types to new namespacing
