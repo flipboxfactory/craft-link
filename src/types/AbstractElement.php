@@ -111,15 +111,18 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
         $type = mb_strtolower(static::displayName());
         $showTargetSite = !empty($this->targetSiteId);
 
-        $html = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField',
-                [
+        $html = Craft::$app->getView()->renderTemplateMacro(
+            '_includes/forms',
+            'checkboxField',
+            [
                     [
                         'label' => Craft::t('app', 'Relate {type} from a specific site?', ['type' => $type]),
                         'name' => 'useTargetSite',
                         'checked' => $showTargetSite,
                         'toggle' => 'target-site-container'
                     ]
-                ]) .
+            ]
+        ) .
             '<div id="target-site-container"' . (!$showTargetSite ? ' class="hidden"' : '') . '>';
 
         $siteOptions = [];
@@ -131,7 +134,9 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
             ];
         }
 
-        $html .= Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'selectField',
+        $html .= Craft::$app->getView()->renderTemplateMacro(
+            '_includes/forms',
+            'selectField',
             [
                 [
                     'label' => Craft::t('app', 'Which site should {type} be related from?', ['type' => $type]),
@@ -140,7 +145,8 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
                     'options' => $siteOptions,
                     'value' => $this->targetSiteId
                 ]
-            ]);
+            ]
+        );
 
         $html .= '</div>';
 
