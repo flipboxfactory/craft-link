@@ -30,6 +30,11 @@ class Url extends AbstractType
     const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
 
     /**
+     * @var bool
+     */
+    public $allowEmptyText = true;
+
+    /**
      * @var
      */
     public $url;
@@ -48,6 +53,18 @@ class Url extends AbstractType
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getText()
+    {
+        if ($this->allowText && $this->overrideText !== null) {
+            return $this->overrideText;
+        }
+
+        return $this->allowEmptyText ? null : $this->getUrl();
+    }
+
+    /**
      * @return string
      */
     public function getUrl(): string
@@ -63,7 +80,8 @@ class Url extends AbstractType
         return array_merge(
             parent::settings(),
             [
-                'placeholder'
+                'placeholder',
+                'allowEmptyText'
             ]
         );
     }
@@ -110,7 +128,7 @@ class Url extends AbstractType
                 ],
                 [
                     [
-                        'url'
+                        'url',
                     ],
                     'safe',
                     'on' => [
