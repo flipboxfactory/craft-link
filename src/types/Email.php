@@ -32,7 +32,12 @@ class Email extends AbstractType
     const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
 
     /**
-     * @var
+     * @var bool
+     */
+    public $useEmailAsDefaultText = true;
+
+    /**
+     * @var string
      */
     public $email;
 
@@ -47,6 +52,18 @@ class Email extends AbstractType
     public static function displayName(): string
     {
         return Link::t('Email');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getText()
+    {
+        if ($this->allowText && $this->overrideText !== null) {
+            return $this->overrideText;
+        }
+
+        return $this->useEmailAsDefaultText ? $this->email : null;
     }
 
     /**
@@ -65,7 +82,8 @@ class Email extends AbstractType
         return array_merge(
             parent::settings(),
             [
-                'placeholder'
+                'placeholder',
+                'useEmailAsDefaultText'
             ]
         );
     }

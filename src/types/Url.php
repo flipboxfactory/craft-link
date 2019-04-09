@@ -32,7 +32,12 @@ class Url extends AbstractType
     const INPUT_TEMPLATE_PATH = self::BASE_TEMPLATE_PATH . '/input';
 
     /**
-     * @var
+     * @var bool
+     */
+    public $useUrlAsDefaultText = true;
+    
+    /**
+     * @var string
      */
     public $url;
 
@@ -54,17 +59,11 @@ class Url extends AbstractType
      */
     public function getText()
     {
-        if ($this->allowText) {
-            if ($this->overrideText !== null) {
-                return $this->overrideText;
-            }
-
-            if (!$this->requireText) {
-                return null;
-            }
+        if ($this->allowText && $this->overrideText !== null) {
+            return $this->overrideText;
         }
 
-        return $this->getUrl();
+        return $this->useUrlAsDefaultText ? $this->getUrl() : null;
     }
 
     /**
@@ -83,7 +82,8 @@ class Url extends AbstractType
         return array_merge(
             parent::settings(),
             [
-                'placeholder'
+                'placeholder',
+                'useUrlAsDefaultText'
             ]
         );
     }

@@ -12,3 +12,12 @@
         value: type.settings.placeholder
     }) }}
 {% endblock %}
+
+{% block notRequiredTextToggle %}
+    {{ forms.lightswitchField({
+        label: 'Use URL as default text'|t('link'),
+        name: 'useUrlAsDefaultText',
+        id: 'useUrlAsDefaultText',
+        on: type.settings.useUrlAsDefaultText,
+    }) }}
+{% endblock %}

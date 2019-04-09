@@ -25,8 +25,16 @@
             instructions: 'Require the user defined text field to be populated'|t('link'),
             name: 'requireText',
             id: 'requireText',
-            on: type.settings.requireText
+            on: type.settings.requireText,
+            toggle: "text-require-text-field",
+            reverseToggle: "text-not-require-text-field"
         }) }}
+        <div id="text-require-text-field" class="{% if not type.settings.requireText %}hidden{% endif %}">
+            {% block requiredTextToggle %}{% endblock %}
+        </div>
+        <div id="text-not-require-text-field" class="{% if type.settings.requireText %}hidden{% endif %}">
+            {% block notRequiredTextToggle %}{% endblock %}
+        </div>
     </div>
 
     {{ forms.lightswitchField({

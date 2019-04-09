@@ -12,3 +12,12 @@
         value: type.settings.placeholder
     }) }}
 {% endblock %}
+
+{% block notRequiredTextToggle %}
+    {{ forms.lightswitchField({
+        label: 'Use Email as default text'|t('link'),
+        name: 'useEmailAsDefaultText',
+        id: 'useEmailAsDefaultText',
+        on: type.settings.useEmailAsDefaultText,
+    }) }}
+{% endblock %}
