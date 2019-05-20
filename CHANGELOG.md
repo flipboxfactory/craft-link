@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
+## Unreleased
+### Changed
+Changed the Url type validator to allow for relative and absolute urls [#2](https://github.com/flipboxfactory/craft-link/issues/2)
+
 ## 1.1.3 - 2019-3-8
 ### Added
 - Url links will not 

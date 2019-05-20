@@ -8,6 +8,7 @@
 
 namespace flipbox\craft\link\types;
 
+use craft\validators\UrlValidator;
 use flipbox\craft\link\Link;
 
 /**
@@ -44,7 +45,7 @@ class Url extends AbstractType
     /**
      * @var string|null The input’s placeholder text
      */
-    public $placeholder;
+    public $placeholder = 'Enter the url for the link';
 
     /**
      * @inheritdoc
@@ -113,8 +114,7 @@ class Url extends AbstractType
                     [
                         'url'
                     ],
-                    'url',
-                    'defaultScheme' => '',
+                    UrlValidator::class,
                     'on' => [
                         self::SCENARIO_INPUT
                     ]
