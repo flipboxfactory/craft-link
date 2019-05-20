@@ -18,7 +18,7 @@
                     required: true
                 }) }}
             </div>
-            <small class="light" style="font-size: small">The url should beginning with 'https://' or 'http://' or '/' or '//'</small>
+            <small class="light" style="font-size: small">The url should beginning with 'https://' or 'http://'{% if type.allowRelativeUrl %} or '/'{% endif %}</small>
             {% include "_includes/forms/errorList" with { errors: errors } %}
         </div>
     </div>

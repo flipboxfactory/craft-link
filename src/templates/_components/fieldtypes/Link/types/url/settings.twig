@@ -4,6 +4,14 @@
 {% set textInstructions = textInstructions ?? 'Allow content manager enter text other than the url.'|t('link') %}
 
 {% block extras %}
+    {{ forms.lightswitchField({
+        label: 'Allow relative Url'|t('link'),
+        instructions: "Allow url to also start with '/'"|t('link'),
+        name: 'allowRelativeUrl',
+        id: 'allowRelativeUrl',
+        on: type.settings.allowRelativeUrl,
+    }) }}
+
     {{ forms.textField({
         label: 'Url Placeholder Text'|t('link'),
         instructions: 'The text that will be shown if the url doesn’t have a value.',

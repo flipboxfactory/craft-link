@@ -36,6 +36,11 @@ class Url extends AbstractType
      * @var bool
      */
     public $useUrlAsDefaultText = true;
+
+    /**
+     * @var bool
+     */
+    public $allowRelativeUrl = false;
     
     /**
      * @var string
@@ -45,7 +50,7 @@ class Url extends AbstractType
     /**
      * @var string|null The input’s placeholder text
      */
-    public $placeholder = 'Enter the url for the link';
+    public $placeholder;
 
     /**
      * @inheritdoc
@@ -84,7 +89,8 @@ class Url extends AbstractType
             parent::settings(),
             [
                 'placeholder',
-                'useUrlAsDefaultText'
+                'useUrlAsDefaultText',
+                'allowRelativeUrl'
             ]
         );
     }
@@ -114,7 +120,7 @@ class Url extends AbstractType
                     [
                         'url'
                     ],
-                    UrlValidator::class,
+                    $this->allowRelativeUrl ? UrlValidator::class : 'url',
                     'on' => [
                         self::SCENARIO_INPUT
                     ]
