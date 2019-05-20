@@ -1,23 +1,19 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
-## Unreleased
+## 1.1.3 - 2019-05-20
 ### Changed
 Changed the Url type validator to allow for relative and absolute urls [#2](https://github.com/flipboxfactory/craft-link/issues/2)
 
-## 1.1.3 - 2019-3-8
-### Added
-- Url links will not 
-
-## 1.1.2 - 2019-3-8
+## 1.1.2 - 2019-03-08
 ### Fixed
 - Multi-site localization issues w/ element link types
 
-## 1.1.1 - 2019-2-20
+## 1.1.1 - 2019-02-20
 ### Fixed
 - Migration would not convert legacy field type/types to new namespacing
 
-## 1.1.0 - 2019-2-18
+## 1.1.0 - 2019-02-18
 ### Added
 - Email link type
 - Enhanced readme/docs
@@ -25,7 +21,7 @@ Changed the Url type validator to allow for relative and absolute urls [#2](http
 ### Changed
 - User link type default uri string is `mailto:{email}`
 
-## 1.0.0 - 2019-2-17
+## 1.0.0 - 2019-02-17
 ### Changed
 - Base namespacing from `flipbox\link` to `flipbox\craft\link`
 
