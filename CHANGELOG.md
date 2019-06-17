@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
-## Unreleased
+## 1.1.4 - 2019-06-17
 ### Fixed
 - "Open link in new window" would not appear checked when it was previously set [#5](https://github.com/flipboxfactory/craft-link/issues/5)
 
