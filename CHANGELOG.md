@@ -1,9 +1,13 @@
 # Changelog
 All Notable changes to `flipboxfactory/craft-link` will be documented in this file
 
+## Unreleased
+### Fixed
+- "Open link in new window" would not appear checked when it was previously set [#5](https://github.com/flipboxfactory/craft-link/issues/5)
+
 ## 1.1.3 - 2019-05-20
 ### Changed
-Changed the Url type validator to allow for relative and absolute urls [#2](https://github.com/flipboxfactory/craft-link/issues/2)
+- Changed the Url type validator to allow for relative and absolute urls [#2](https://github.com/flipboxfactory/craft-link/issues/2)
 
 ## 1.1.2 - 2019-03-08
 ### Fixed
