@@ -21,7 +21,8 @@
                 id: identifierField,
                 options: options,
                 value: value ? value.identifier : null,
-                toggle: true
+                toggle: true,
+                targetPrefix: field.handle ~ '-'
             }) }}
         </div>
         <div class="flex-grow">
@@ -34,7 +35,7 @@
     {% for key, type in field.types %}
         {% set isCurrent = activeIdentifier == type.identifier %}
         {% set type = isCurrent and value ? value : type %}
-        <div id="{{ key|id }}" class="settings{% if not isCurrent %} hidden{% endif %}">
+        <div id="{{ field.handle }}-{{ key|id }}" class="settings{% if not isCurrent %} hidden{% endif %}">
             {% namespace 'types['~key~']' %}
             {{ type.inputHtml(field, element)|raw }}
             {% endnamespace %}
