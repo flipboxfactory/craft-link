@@ -1,10 +1,10 @@
 (function ($) {
     /**
- * global: Craft
-*/
+     * global: Craft
+     */
     /**
- * global: Garnish
-*/
+     * global: Garnish
+     */
     Craft.LinkTypeManager = Garnish.Base.extend(
         {
             $typeSelect: null,
@@ -166,7 +166,7 @@
                     )
                 );
             },
-            
+
             appendType: function (LinkType) {
                 // Append new html and nav
                 this.$types.append(LinkType.$html);
@@ -186,7 +186,7 @@
 
                 this.selectTab($(this.$nav.children()[0]).children('a'))
             },
-            
+
             refresh: function () {
                 if (this.$nav.children().length <= 0) {
                     this.$typesContainer.hide();

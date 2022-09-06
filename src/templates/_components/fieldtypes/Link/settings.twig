@@ -3,7 +3,7 @@
 {% set typeElementId = 'types' %}
 
 {% set typeOptions = [{
-label: "-- Add Type --"|t('link')
+    label: "-- Add Type --"|t('link')
 }] %}
 {% for type in types %}
     {% set typeOptions = typeOptions|merge([{
@@ -52,13 +52,13 @@ label: "-- Add Type --"|t('link')
 
 {% set js %}
 
-    {#<script>#}
+    {# <script> #}
     new Craft.LinkTypeManager(
-        $("#{{ selectElementId|namespaceInputId|e('js') }}"),
-        $("#{{ typeElementId|namespaceInputId|e('js') }}"),
-        '{{ typeElementId|namespaceInputName|e('js') }}'
+    $("#{{ selectElementId|namespaceInputId|e('js') }}"),
+    $("#{{ typeElementId|namespaceInputId|e('js') }}"),
+    '{{ typeElementId|namespaceInputName|e('js') }}'
     );
-    {#</script>#}
+    {# </script> #}
 {% endset %}
 
 {% js js %}

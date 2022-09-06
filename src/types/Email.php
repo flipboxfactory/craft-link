@@ -71,7 +71,7 @@ class Email extends AbstractType
      */
     public function getUrl(): string
     {
-        return $this->email ? ('mailto:' . $this->email) :  '';
+        return $this->email ? ('mailto:' . $this->email) : '';
     }
 
     /**

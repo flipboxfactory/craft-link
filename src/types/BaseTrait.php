@@ -82,9 +82,9 @@ trait BaseTrait
 
     /**
      * @param string $identifier
-     * @return string
+     * @return self
      */
-    public function setIdentifier(string $identifier): string
+    public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
         return $this;
@@ -188,7 +188,7 @@ trait BaseTrait
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getHtml();
     }

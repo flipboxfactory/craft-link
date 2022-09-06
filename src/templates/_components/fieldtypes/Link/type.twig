@@ -1,6 +1,6 @@
-{#{% set namespace = namespace is defined and namespace ? : '' %}#}
+{# {% set namespace = namespace is defined and namespace ? : '' %} #}
 {% namespace namespace~'['~type.identifier~']' %}
-<input type="hidden" name="class" value="{{ className(type) }}"/>
-{{ type.settingsHtml()|raw }}
-<a class="btn remove" href="#">Remove</a>
+    <input type="hidden" name="class" value="{{ className(type) }}"/>
+    {{ type.settingsHtml()|raw }}
+    <a class="btn remove" href="#">Remove</a>
 {% endnamespace %}

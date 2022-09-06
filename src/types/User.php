@@ -16,7 +16,7 @@ use flipbox\craft\link\Link;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  *
- * @method UserElement getElement()
+ * @method null|UserElement getElement()
  */
 class User extends AbstractElement
 {
@@ -69,11 +69,12 @@ class User extends AbstractElement
      */
     public function getElementText(): string
     {
-        /** @var \craft\elements\User $element */
         if (!$element = $this->getElement()) {
             return '';
         }
-        return (string) $element->fullName;
+
+        /** @var \craft\elements\User $element */
+        return (string)$element->fullName;
     }
 
     /**

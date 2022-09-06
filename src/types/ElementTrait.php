@@ -11,6 +11,7 @@ namespace flipbox\craft\link\types;
 use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
+use craft\helpers\Cp;
 use flipbox\craft\link\fields\Link;
 
 /**
@@ -30,7 +31,7 @@ trait ElementTrait
     private $elementId;
 
     /**
-     * @var Element|null
+     * @var Element|null|false
      */
     private $element;
 
@@ -62,7 +63,7 @@ trait ElementTrait
     public $selectionLabel;
 
     /**
-     * @var int Whether each site should get its own unique set of relations
+     * @var bool Whether each site should get its own unique set of relations
      */
     public $localizeRelations = false;
 
@@ -235,7 +236,7 @@ trait ElementTrait
      */
     protected function availableSources(): array
     {
-        return Craft::$app->getElementIndexes()->getSources(static::elementType(), 'modal');
+        return Craft::$app->getElementSources()->getSources(static::elementType(), 'modal');
     }
 
     /**
@@ -258,20 +259,14 @@ trait ElementTrait
             $viewModeOptions[] = ['label' => $label, 'value' => $key];
         }
 
-        return Craft::$app->getView()->renderTemplateMacro(
-            '_includes/forms',
-            'selectField',
-            [
-            [
-                'label' => Craft::t('app', 'View Mode'),
-                'instructions' => Craft::t('app', 'Choose how the field should look for authors.'),
-                'id' => 'viewMode',
-                'name' => 'viewMode',
-                'options' => $viewModeOptions,
-                'value' => $this->viewMode
-            ]
-            ]
-        );
+        return Cp::selectFieldHtml([
+            'label' => Craft::t('app', 'View Mode'),
+            'instructions' => Craft::t('app', 'Choose how the field should look for authors.'),
+            'id' => 'viewMode',
+            'name' => 'viewMode',
+            'options' => $viewModeOptions,
+            'value' => $this->viewMode
+        ]);
     }
 
     /**
@@ -295,15 +290,15 @@ trait ElementTrait
     /**
      * Returns the site ID that target elements should have.
      *
-     * @param  ElementInterface|null $element
+     * @param ElementInterface|null $element
      * @return int
      * @throws \craft\errors\SiteNotFoundException
      */
     protected function targetSiteId(ElementInterface $element = null): int
     {
         /**
- * @var Element|null $element
-*/
+         * @var Element|null $element
+         */
         if (Craft::$app->getIsMultiSite()) {
             if ($this->targetSiteId) {
                 return $this->targetSiteId;
@@ -330,17 +325,17 @@ trait ElementTrait
     /**
      * Returns an array of variables that should be passed to the input template.
      *
-     * @param  Link                  $field
-     * @param  ElementInterface|null $element
+     * @param Link $field
+     * @param ElementInterface|null $element
      * @return array
      * @throws \craft\errors\SiteNotFoundException
      */
     protected function inputTemplateVariables(
-        Link $field,
+        Link             $field,
         ElementInterface $element = null
-    ): array {
+    ): array
+    {
         $selectionCriteria = $this->inputSelectionCriteria();
-        $selectionCriteria['enabledForSite'] = null;
         $selectionCriteria['siteId'] = $this->targetSiteId($element);
 
         return [

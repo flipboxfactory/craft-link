@@ -8,7 +8,7 @@
 {% block extras %}
     <div class="flex" style="margin-top: 12px;">
         {% if showText %}
-            {% if type.settings.requireText  %}
+            {% if type.settings.requireText %}
                 {% set textPlaceholder = textPlaceholder ~ ' (required)'|t('link') %}
             {% endif %}
             <div class="flex-grow">

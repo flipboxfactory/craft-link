@@ -113,7 +113,7 @@ class Link extends Field implements PreviewableFieldInterface
     public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof TypeInterface) {
-            return (string) $value;
+            return $value->__toString();
         }
 
         return '';
@@ -273,16 +273,13 @@ class Link extends Field implements PreviewableFieldInterface
 
     /**
      * @param string $identifier
-     * @param array  $config
+     * @param array $config
      * @return TypeInterface|null
      * @throws \yii\base\InvalidConfigException
      */
     private function resolveConfig(string $identifier, array $config)
     {
         // Create new
-        /**
-         * @var TypeInterface $type
-         */
         if (!$type = $this->createType($config)) {
             return null;
         }
@@ -297,10 +294,10 @@ class Link extends Field implements PreviewableFieldInterface
 
     /**
      * @param $type
-     * @return array|object|null
+     * @return TypeInterface|null
      * @throws \yii\base\InvalidConfigException
      */
-    private function createType($type)
+    private function createType($type): ?TypeInterface
     {
         if ($type instanceof TypeInterface) {
             return $type;

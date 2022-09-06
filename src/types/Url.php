@@ -41,7 +41,7 @@ class Url extends AbstractType
      * @var bool
      */
     public $allowRelativeUrl = false;
-    
+
     /**
      * @var string
      */

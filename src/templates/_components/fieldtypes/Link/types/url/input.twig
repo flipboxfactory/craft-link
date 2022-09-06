@@ -11,14 +11,15 @@
         <div class="field" id="url">
             <div class="input {{ orientation }}{% if errors %} errors{% endif %}">
                 {{ forms.text({
-                   name: 'url',
+                    name: 'url',
                     id: 'url',
                     value: type.url,
                     placeholder: type.settings.placeholder|t('site'),
                     required: true
                 }) }}
             </div>
-            <small class="light" style="font-size: small">The url should beginning with 'https://' or 'http://'{% if type.allowRelativeUrl %} or '/'{% endif %}</small>
+            <small class="light" style="font-size: small">The url should beginning with 'https://' or
+                'http://'{% if type.allowRelativeUrl %} or '/'{% endif %}</small>
             {% include "_includes/forms/errorList" with { errors: errors } %}
         </div>
     </div>

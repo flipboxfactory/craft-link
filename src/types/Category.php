@@ -15,7 +15,7 @@ use flipbox\craft\link\Link;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  *
- * @method CategoryElement findElement()
+ * @method null|CategoryElement findElement()
  */
 class Category extends AbstractElement
 {

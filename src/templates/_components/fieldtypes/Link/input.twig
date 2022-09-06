@@ -36,7 +36,7 @@
         {% set type = isCurrent and value ? value : type %}
         <div id="{{ key|id }}" class="settings{% if not isCurrent %} hidden{% endif %}">
             {% namespace 'types['~key~']' %}
-            {{ type.inputHtml(field, element)|raw }}
+                {{ type.inputHtml(field, element)|raw }}
             {% endnamespace %}
         </div>
     {% endfor %}

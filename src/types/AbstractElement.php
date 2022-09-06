@@ -11,6 +11,7 @@ namespace flipbox\craft\link\types;
 use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
+use craft\helpers\Cp;
 use flipbox\craft\link\fields\Link;
 use yii\base\Model;
 
@@ -69,7 +70,6 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
      */
     public function getElementText(): string
     {
-        /** @var Element $element */
         if (!$element = $this->getElement()) {
             return '';
         }
@@ -111,18 +111,14 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
         $type = mb_strtolower(static::displayName());
         $showTargetSite = !empty($this->targetSiteId);
 
-        $html = Craft::$app->getView()->renderTemplateMacro(
-            '_includes/forms',
-            'checkboxField',
-            [
-                    [
-                        'label' => Craft::t('app', 'Relate {type} from a specific site?', ['type' => $type]),
-                        'name' => 'useTargetSite',
-                        'checked' => $showTargetSite,
-                        'toggle' => 'target-site-container'
-                    ]
-            ]
-        ) .
+        $html = Cp::checkboxFieldHtml(
+                [
+                    'label' => Craft::t('app', 'Relate {type} from a specific site?', ['type' => $type]),
+                    'name' => 'useTargetSite',
+                    'checked' => $showTargetSite,
+                    'toggle' => 'target-site-container'
+                ]
+            ) .
             '<div id="target-site-container"' . (!$showTargetSite ? ' class="hidden"' : '') . '>';
 
         $siteOptions = [];
@@ -134,19 +130,13 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
             ];
         }
 
-        $html .= Craft::$app->getView()->renderTemplateMacro(
-            '_includes/forms',
-            'selectField',
-            [
-                [
-                    'label' => Craft::t('app', 'Which site should {type} be related from?', ['type' => $type]),
-                    'id' => 'targetSiteId',
-                    'name' => 'targetSiteId',
-                    'options' => $siteOptions,
-                    'value' => $this->targetSiteId
-                ]
-            ]
-        );
+        $html .= Cp::selectFieldHtml([
+            'label' => Craft::t('app', 'Which site should {type} be related from?', ['type' => $type]),
+            'id' => 'targetSiteId',
+            'name' => 'targetSiteId',
+            'options' => $siteOptions,
+            'value' => $this->targetSiteId
+        ]);
 
         $html .= '</div>';
 

@@ -15,7 +15,7 @@ use flipbox\craft\link\Link;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  *
- * @method EntryElement getElement()
+ * @method null|EntryElement getElement()
  */
 class Entry extends AbstractElement
 {

@@ -35,7 +35,7 @@ class Settings extends AssetBundle
     public function init()
     {
         $this->js = [
-            'LinkConfiguration' . $this->dotJs()
+            'LinkConfiguration.js'
         ];
 
         $this->css = [

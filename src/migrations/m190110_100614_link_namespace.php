@@ -25,23 +25,24 @@ class m190110_100614_link_namespace extends Migration
         $records = Field::find()
             ->andWhere(
                 [
-                'type' => "flipbox\\link\\fields\\Link"
+                    'type' => "flipbox\\link\\fields\\Link"
                 ]
             )
             ->all();
 
         $success = true;
 
-        /**
- * @var Field $record
-*/
+        /** @var Field $record */
         foreach ($records as $record) {
             $record->type = Link::class;
 
+            /** @var array|string $settings */
             $settings = $record->settings ?? [];
             if (is_string($settings)) {
                 $settings = Json::decodeIfJson($settings);
             }
+
+            /** @var array $settings */
 
             $types = ArrayHelper::remove($settings, 'types', []);
             foreach ($types as &$type) {

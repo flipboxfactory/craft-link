@@ -24,12 +24,12 @@ class LinkValidator extends Validator
     public function validateAttribute($element, $attribute)
     {
         /**
- * @var Element $element
-*/
+         * @var Element $element
+         */
 
         /**
- * @var TypeInterface $value
-*/
+         * @var TypeInterface $value
+         */
         $value = $element->$attribute;
 
         if ($value instanceof TypeInterface) {

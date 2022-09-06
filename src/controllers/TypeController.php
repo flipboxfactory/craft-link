@@ -24,6 +24,8 @@ class TypeController extends Controller
      * @return Response
      * @throws HttpException
      * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      * @throws \yii\web\BadRequestHttpException
      */
@@ -39,7 +41,7 @@ class TypeController extends Controller
         );
 
         if (!$type) {
-            throw new HttpException("Type not found");
+            throw new HttpException(404, "Type not found");
         }
 
         // Allow explicit setting of the identifier
@@ -57,10 +59,10 @@ class TypeController extends Controller
 
         return $this->asJson(
             [
-            'label' => $type::displayName(),
-            'paneHtml' => $html,
-            'headHtml' => $view->getHeadHtml(),
-            'footHtml' => $view->getBodyHtml(),
+                'label' => $type::displayName(),
+                'paneHtml' => $html,
+                'headHtml' => $view->getHeadHtml(),
+                'footHtml' => $view->getBodyHtml(),
             ]
         );
     }

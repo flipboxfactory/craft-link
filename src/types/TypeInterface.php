@@ -79,4 +79,9 @@ interface TypeInterface
      * @return string
      */
     public function inputHtml(Link $field): string;
+
+    /**
+     * @return string
+     */
+    public function __toString(): string;
 }
