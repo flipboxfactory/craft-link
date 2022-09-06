@@ -22,7 +22,7 @@
     "rss": "https://github.com/flipboxfactory/craft-link/commits/master.atom"
   },
   "require": {
-    "php": "^7.0|^8.0",
+    "php": "^8.0",
     "craftcms/cms": "^4.0"
   },
   "require-dev": {
