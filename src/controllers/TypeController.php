@@ -23,7 +23,7 @@ class TypeController extends Controller
     /**
      * @return Response
      * @throws HttpException
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      * @throws \yii\web\BadRequestHttpException
      */

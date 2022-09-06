@@ -1,7 +1,7 @@
 {
   "name": "flipboxfactory/craft-link",
   "description": "Link Field Type for Craft CMS",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "type": "craft-plugin",
   "keywords": [
     "flipbox",
@@ -22,7 +22,8 @@
     "rss": "https://github.com/flipboxfactory/craft-link/commits/master.atom"
   },
   "require": {
-    "craftcms/cms": "^3.0"
+    "php": "^7.0|^8.0",
+    "craftcms/cms": "^4.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.2",

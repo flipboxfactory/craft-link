@@ -102,7 +102,7 @@ class Link extends Field implements PreviewableFieldInterface
     /**
      * @inheritdoc
      */
-    public function getContentColumnType(): string
+    public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
@@ -110,7 +110,7 @@ class Link extends Field implements PreviewableFieldInterface
     /**
      * @inheritdoc
      */
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof TypeInterface) {
             return (string) $value;
@@ -121,11 +121,11 @@ class Link extends Field implements PreviewableFieldInterface
 
     /**
      * @inheritdoc
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
 
         $view = Craft::$app->getView();
@@ -144,10 +144,10 @@ class Link extends Field implements PreviewableFieldInterface
 
     /**
      * @inheritdoc
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         return Craft::$app->getView()->renderTemplate(
             'link/_components/fieldtypes/Link/input',
@@ -162,7 +162,7 @@ class Link extends Field implements PreviewableFieldInterface
     /**
      * @inheritdoc
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         if ($value === null) {
             return $value;
@@ -217,7 +217,7 @@ class Link extends Field implements PreviewableFieldInterface
      * @return array|TypeInterface|mixed|object|null
      * @throws \yii\base\InvalidConfigException
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         if ($value instanceof TypeInterface) {
             return $value;

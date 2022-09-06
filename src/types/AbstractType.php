@@ -53,7 +53,7 @@ abstract class AbstractType extends Model implements TypeInterface
 
     /**
      * @inheritdoc
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      */
     public function settingsHtml(): string
@@ -92,7 +92,7 @@ abstract class AbstractType extends Model implements TypeInterface
 
     /**
      * @inheritdoc
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      */
     public function inputHtml(Link $field): string

@@ -79,7 +79,7 @@ abstract class AbstractElement extends AbstractType implements TypeInterface
     /**
      * @inheritdoc
      * @param ElementInterface|null $element
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      * @throws \yii\base\Exception
      */
     public function inputHtml(Link $field, ElementInterface $element = null): string

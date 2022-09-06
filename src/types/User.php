@@ -73,7 +73,7 @@ class User extends AbstractElement
         if (!$element = $this->getElement()) {
             return '';
         }
-        return (string) $element->getFullName();
+        return (string) $element->fullName;
     }
 
     /**
